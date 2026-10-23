@@ -1,66 +1,85 @@
-"""Render the Policy Brief template.
-   python3 render.py sheet t1 t2 ...   -> sheet.jpg contact sheet of those voice-times
-   python3 render.py video [fps]       -> out/picture.mp4 (silent, voice timeline)
+"""Render a Policy Brief episode.
+   python3 render.py ep002 sheet 1.5 8 20 ...   -> out/ep002/sheet.jpg (and frame.png when one time)
+   python3 render.py ep002 video                 -> out/ep002/picture.mp4 + timing.json (silent, voice timeline)
+   python3 render.py ep002 timing                -> out/ep002/timing.json only
 """
-import sys, subprocess, pathlib, json
+import sys, subprocess, pathlib, json, io
 from playwright.sync_api import sync_playwright
 
 ROOT = pathlib.Path(__file__).parent.resolve()
-URL = (ROOT / "template.html").as_uri()
+EP, MODE = sys.argv[1], sys.argv[2]
+URL = (ROOT / "template.html").as_uri() + "?ep=" + EP
+OUT = ROOT / "out" / EP
+OUT.mkdir(parents=True, exist_ok=True)
 
 
 def page_ctx(p):
     b = p.chromium.launch(args=["--force-color-profile=srgb", "--font-render-hinting=none"])
     pg = b.new_page(viewport={"width": 1080, "height": 1920}, device_scale_factor=1)
+    errs = []
+    pg.on("pageerror", lambda e: errs.append(str(e)))
     pg.goto(URL)
-    pg.wait_for_function("window.TOTAL > 0")
+    try:
+        pg.wait_for_function("window.TOTAL > 0", timeout=15000)
+    except Exception:
+        raise SystemExit("page failed: " + "; ".join(errs))
     pg.evaluate("document.fonts.ready")
     pg.wait_for_timeout(400)
     return b, pg
 
 
+def write_timing(pg):
+    d = pg.evaluate("({total: TOTAL, at: VOICE_AT, sfx: SFX, overlays: OVERLAYS, caps: CAPS})")
+    (OUT / "timing.json").write_text(json.dumps(d, ensure_ascii=False, indent=1))
+    return d
+
+
 def sheet(times):
     from PIL import Image
-    import io
     with sync_playwright() as p:
         b, pg = page_ctx(p)
+        write_timing(pg)
         shots = []
         for t in times:
             pg.evaluate(f"seek({t})")
             shots.append(Image.open(io.BytesIO(pg.screenshot(type="png"))).convert("RGB"))
         b.close()
-    w = 360; h = 640; cols = min(6, len(shots)); rows = (len(shots) + cols - 1) // cols
+    w, h = 360, 640
+    cols = min(6, len(shots)); rows = (len(shots) + cols - 1) // cols
     out = Image.new("RGB", (w * cols, h * rows), "white")
     for i, im in enumerate(shots):
         out.paste(im.resize((w, h)), ((i % cols) * w, (i // cols) * h))
-    out.save(ROOT / "sheet.jpg", quality=88)
+    out.save(OUT / "sheet.jpg", quality=88)
     if len(shots) == 1:
-        shots[0].save(ROOT / "frame.png")
+        shots[0].save(OUT / "frame.png")
 
 
 def video(fps=30):
-    out = ROOT / "out"; out.mkdir(exist_ok=True)
     with sync_playwright() as p:
         b, pg = page_ctx(p)
-        total = pg.evaluate("TOTAL"); at = pg.evaluate("VOICE_AT")
-        (out / "timing.json").write_text(json.dumps({"total": total, "at": at, "sfx": pg.evaluate("SFX")}))
-        if len(sys.argv) > 3 and sys.argv[3] == "timing":
+        d = write_timing(pg)
+        if MODE == "timing":
             b.close(); return
-        n = int(total * fps)
+        n = int(d["total"] * fps)
         ff = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-y", "-f", "image2pipe", "-framerate", str(fps), "-c:v", "mjpeg", "-i", "-",
-                               "-c:v", "libx264", "-preset", "slow", "-crf", "15", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
-                               str(out / "picture.mp4")], stdin=subprocess.PIPE)
+                               "-c:v", "libx264", "-preset", "medium", "-crf", "17", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
+                               str(OUT / "picture.mp4")], stdin=subprocess.PIPE)
         for f in range(n):
             pg.evaluate(f"seek({f / fps})")
-            ff.stdin.write(pg.screenshot(type="jpeg", quality=95))
+            ff.stdin.write(pg.screenshot(type="jpeg", quality=93))
             if f % 300 == 0:
-                print(f"{f}/{n}", flush=True)
+                print(f"{EP} {f}/{n}", flush=True)
         ff.stdin.close(); ff.wait(); b.close()
-    print("done", total)
+    print(EP, "done", round(d["total"], 2), flush=True)
 
 
 if __name__ == "__main__":
-    if sys.argv[1] == "sheet":
-        sheet([float(x) for x in sys.argv[2:]])
+    if MODE == "sheet":
+        sheet([float(x) for x in sys.argv[3:]])
+    elif MODE == "auto":
+        with sync_playwright() as p:
+            b, pg = page_ctx(p)
+            sc = pg.evaluate("SCENES"); b.close()
+        sheet([round(a + 0.85 * (e - a), 2) for a, e, _ in sc])
     else:
-        video(int(sys.argv[2]) if len(sys.argv) > 2 else 30)
+        video()

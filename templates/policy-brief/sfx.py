@@ -1,6 +1,6 @@
-"""Synthesize the subtle UI sound layer from out/timing.json (cues in voice seconds).
+"""Synthesize the subtle UI sound layer from out/<ep>/timing.json (cues in voice seconds).
    Output: out/sfx.wav (48 kHz stereo). Original synthesis — no licensed samples."""
-import json, pathlib, numpy as np, wave
+import json, pathlib, sys, numpy as np, wave
 
 ROOT = pathlib.Path(__file__).parent
 SR = 48000
@@ -60,7 +60,8 @@ def make(kind):
 
 
 def main():
-    tj = json.loads((ROOT / "out" / "timing.json").read_text())
+    OUT = ROOT / "out" / sys.argv[1]
+    tj = json.loads((OUT / "timing.json").read_text())
     total = tj["total"]; cues = tj["sfx"]
     L = np.zeros(int(total * SR) + SR); R = np.zeros_like(L)
     for i, (t, k) in enumerate(cues):
@@ -70,7 +71,7 @@ def main():
     st = np.stack([L, R], 1)[: int(total * SR)]
     pk = np.abs(st).max(); print("peak", round(float(pk), 3), "cues", len(cues))
     st = np.clip(st, -0.98, 0.98)
-    with wave.open(str(ROOT / "out" / "sfx.wav"), "wb") as w:
+    with wave.open(str(OUT / "sfx.wav"), "wb") as w:
         w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR)
         w.writeframes((st * 32767).astype("<i2").tobytes())
 
