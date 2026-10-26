@@ -23,7 +23,10 @@ def env_ad(n, a, d):  # 指数衰减包络
     e = np.exp(-t / d)
     if a > 0: e *= np.clip(t / a, 0, 1)
     return e
+PLACED = []  # (起始时刻, 该声音自身的起音时刻) — 起音 = 包络首次超过自身峰值 −30 dB
 def place(dst, x, at, gain=1.0, pan=0.0):
+    mono = np.abs(x if x.ndim == 1 else x.mean(axis=0)); pk = mono.max() if mono.size else 0
+    if pk > 0: PLACED.append((at, at + int(np.argmax(mono > pk * 10 ** (-30 / 20))) / SR))
     i = T(at)
     if i >= N: return
     if x.ndim == 1: x = np.stack([x, x])
@@ -189,12 +192,13 @@ def chirp(at, dst, gain=0.25, pan=0.0):
         y = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.sin(np.pi * tt / d) ** 2
         place(dst, y, at + k * rng.uniform(0.07, 0.14), gain, pan)
 
-def build_sfx():
+def build_sfx(ambient=True):
     s = buf()
-    s += city_bed()
-    # 鸟叫（清晨，第一幕多）
-    for k in range(9): chirp(rng.uniform(0.1, 4.4), s, 0.16, rng.uniform(-0.7, 0.7))
-    for k in range(4): chirp(rng.uniform(5.6, 10.5), s, 0.10, rng.uniform(-0.7, 0.7))
+    if ambient:
+        s += city_bed()
+        # 鸟叫（清晨，第一幕多）
+        for k in range(9): chirp(rng.uniform(0.1, 4.4), s, 0.16, rng.uniform(-0.7, 0.7))
+        for k in range(4): chirp(rng.uniform(5.6, 10.5), s, 0.10, rng.uniform(-0.7, 0.7))
     # 0 秒钩子：一辆车贴近驶过（第一帧就有声音）
     m = T(1.1); tt = np.arange(m) / m
     whoosh = bp(noise(m), 150, 3000) * (np.exp(-((tt - 0.3) / 0.18) ** 2))
@@ -239,7 +243,7 @@ def build_sfx():
     cl = bp(noise(T(0.5)), 300, 3000) * env_ad(T(0.5), 0.001, 0.07) + 0.5 * bell(210, 0.5, 0.8)
     place(s, cl, clank_t, 0.55, -0.2); ev('container_clank', clank_t)
     m = T(2.8); tt = np.arange(m) / SR
-    creak = bp(noise(m), 600, 1400) * (0.4 + 0.6 * np.abs(np.sin(2 * np.pi * 1.6 * tt))) * np.sin(np.pi * tt / 2.8)
+    creak = bp(noise(m), 600, 1400) * (0.4 + 0.6 * np.abs(np.sin(2 * np.pi * 1.6 * tt))) * np.clip(tt / 0.02, 0, 1) * np.interp(tt, [0, 0.03, 2.2, 2.8], [0.5, 1, 0.8, 0])
     place(s, creak, 5.9, 0.16, 0.5); ev('tower_crane', 5.9)
     m = T(1.1); tt = np.arange(m) / SR
     horn = (np.sin(2 * np.pi * 185 * tt) + 0.5 * np.sin(2 * np.pi * 370 * tt) + 0.25 * np.sin(2 * np.pi * 555 * tt)) * np.clip(tt / 0.06, 0, 1) * np.clip((1.1 - tt) / 0.25, 0, 1)
@@ -277,7 +281,7 @@ def build_sfx():
         tb += BEAT / 4
     # 列车：驶近的多普勒呼啸 → 入画气浪 → 跟拍时的轰鸣 → 远去（音调下沉）
     a = E['trainIn'] - 0.9; m = T(0.95); tt = np.arange(m) / SR
-    app = bp(noise(m), 400, 7000) * (tt / tt[-1]) ** 3
+    app = bp(noise(m), 400, 7000) * np.clip(tt / 0.01, 0, 1) * (0.15 + 0.85 * (tt / tt[-1]) ** 3)  # 起点轻轻可闻，然后渐强
     app = sweep_tv(app, 1500 + 9000 * (tt / tt[-1]) ** 2)
     place(s, np.stack([app * 0.6, app]), a, 1.2); ev('train_approach', a)
     m = T(1.6); tt = np.arange(m) / SR
@@ -329,5 +333,11 @@ write_wav(os.path.join(OUT, 'music.wav'), music * mg)
 write_wav(os.path.join(OUT, 'sfx.wav'), sfx * sg)
 mix = music * mg + sfx * sg
 write_wav(os.path.join(OUT, 'mix.wav'), mix / (np.max(np.abs(mix)) + 1e-9) * 0.7)
+for c in log:  # 每个节拍表事件：找在该时刻放下的声音，量它自己的起音
+    cand = [o for (a, o) in PLACED if abs(a - c['t']) < 0.002]
+    if cand: c['onset'] = round(min(cand), 4); c['dev_ms'] = round((min(cand) - c['t']) * 1000, 1)
 json.dump(log, open(os.path.join(OUT, 'cues_audio.json'), 'w'), ensure_ascii=False, indent=1)
+# 只含事件音效（无环境底噪）的分轨，专门用来测起音与节拍表的偏差
+log.clear(); ev_only = build_sfx(ambient=False)
+write_wav(os.path.join(OUT, 'sfx_events.wav'), ev_only / (np.max(np.abs(ev_only)) + 1e-9) * 0.7)
 print('ok', len(log), 'cues')

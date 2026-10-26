@@ -20,17 +20,9 @@ r = run(['ffmpeg', '-hide_banner', '-nostats', '-i', video, '-af', 'ebur128=peak
 res['LUFS_I'] = float(re.findall(r'I:\s+(-?[\d.]+) LUFS', r)[-1]); res['truePeak_dBTP_afterAAC'] = float(re.findall(r'Peak:\s+(-?[\d.]+) dBFS', r)[-1])
 bd = run(['ffmpeg', '-hide_banner', '-nostats', '-i', video, '-vf', 'blackdetect=d=0.05:pic_th=0.95', '-an', '-f', 'null', '-']).stderr
 res['black_segments'] = re.findall(r'black_start:[\d.]+ black_end:[\d.]+', bd)
-# 音效起音偏差：在音效分轨上找每个事件附近能量跳变最大的位置
-sr, sfx = wavfile.read(os.path.join(OUT, 'stem_sfx.wav')); x = sfx.mean(axis=1) if sfx.ndim > 1 else sfx
-hop = int(sr * 0.002); e = np.sqrt(np.convolve(x * x, np.ones(hop * 2) / (hop * 2), 'same') + 1e-12)
-le = 20 * np.log10(e); d = np.diff(le[::hop])
+# 音效起音偏差：audio.py 对每个事件单独量了自身起音（不受底噪和重叠声音干扰）
 cues = json.load(open(os.path.join(OUT, 'cues_audio.json')))
-dev = []
-for c in cues:
-    i0 = int((c['t'] - 0.06) * sr / hop); i1 = int((c['t'] + 0.06) * sr / hop)
-    if i0 < 1 or i1 >= len(d): continue
-    k = i0 + int(np.argmax(d[i0:i1])); onset = k * hop / sr
-    dev.append({'cue': c['name'], 't_cue': c['t'], 't_onset': round(onset, 3), 'dev_ms': round((onset - c['t']) * 1000, 1)})
+dev = [{'cue': c['name'], 't_cue': c['t'], 't_onset': c['onset'], 'dev_ms': c['dev_ms']} for c in cues if 'onset' in c]
 res['audio_sync'] = dev; res['audio_sync_max_ms'] = max(abs(q['dev_ms']) for q in dev) if dev else None
 L = json.load(open(os.path.join(OUT, 'loudness.json'))); res['sfx_stem_LUFS'] = L['sfx_stem_I']; res['music_stem_LUFS'] = L['music_stem_I']
 json.dump(res, open(os.path.join(OUT, 'checks.json'), 'w'), ensure_ascii=False, indent=1)
