@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>TonyBook 跨境实操 · 助理聊天模板</title>
+<style>
+/* TonyBook 跨境实操 · 助理聊天风（v1）
+   深色聊天界面：助理一条条发消息讲重点。唯一强调色珊瑚橙 #FF6B4A，确认色薄荷绿 #3DDC97，粉丝提问用蓝色气泡。
+   与 Shopwright（暖白底、青柠色）完全分开，不混用。 */
+:root{
+  --bg:#0d0f13; --bg2:#141821; --panel:#1a1e26; --line:rgba(255,255,255,.08);
+  --bubble:#f5f2ec; --ink:#15171c; --ink2:#5d6470; --muted:#8a93a3;
+  --coral:#ff6b4a; --coral2:#ff9b6e; --coraltint:rgba(255,107,74,.16);
+  --mint:#3ddc97; --user:#3b7bff;
+  --sans:"Inter","Noto Sans CJK SC","Noto Color Emoji",sans-serif;
+  --mono:"DejaVu Sans Mono",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+body{font-family:var(--sans);color:#fff;-webkit-font-smoothing:antialiased;font-feature-settings:"tnum" 1}
+#stage{position:absolute;inset:0;overflow:hidden;
+  background:
+    radial-gradient(900px 700px at var(--gx,20%) var(--gy,18%),rgba(255,107,74,.13),transparent 60%),
+    radial-gradient(800px 800px at 92% 78%,rgba(59,123,255,.10),transparent 60%),
+    linear-gradient(180deg,var(--bg2),var(--bg) 40%,var(--bg))}
+#grain{position:absolute;inset:-60px;opacity:.06;pointer-events:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.9'/></svg>")}
+
+/* header: chat app top bar */
+.hdr{position:absolute;left:0;right:0;top:118px;height:120px;display:flex;align-items:center;padding:0 56px;gap:22px}
+.hdr .back{width:26px;height:26px;border-left:5px solid #cfd5df;border-bottom:5px solid #cfd5df;transform:rotate(45deg);opacity:.75;margin-right:8px}
+.av{border-radius:50%;background:radial-gradient(circle at 30% 25%,#ffb38f,var(--coral) 55%,#d9462a);display:grid;place-items:center;
+  color:#fff;font-weight:800;font-family:"Inter";box-shadow:0 10px 30px -8px rgba(255,107,74,.7),inset 0 2px 0 rgba(255,255,255,.35)}
+.hdr .av{width:92px;height:92px;font-size:46px}
+.hdr .who b{display:block;font-size:44px;font-weight:800;letter-spacing:-.01em}
+.hdr .who span{display:flex;align-items:center;gap:10px;font-size:26px;color:var(--muted);margin-top:4px}
+.hdr .who span i{width:14px;height:14px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 6px rgba(61,220,151,.15)}
+.hdr .ep{margin-left:auto;font-family:var(--mono);font-size:24px;letter-spacing:.12em;color:var(--coral2);
+  border:2px solid rgba(255,107,74,.45);border-radius:999px;padding:10px 22px;background:rgba(255,107,74,.08)}
+.pin{position:absolute;left:56px;right:56px;top:262px;height:78px;border-radius:22px;background:rgba(255,255,255,.06);border:1px solid var(--line);
+  display:flex;align-items:center;gap:16px;padding:0 26px;font-size:30px;color:#dfe4ec}
+.pin em{font-style:normal;font-size:22px;font-weight:800;color:var(--ink);background:var(--coral);border-radius:8px;padding:4px 10px;letter-spacing:.06em}
+
+/* chat viewport */
+#view{position:absolute;left:0;right:0;top:372px;height:930px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 46px,#000 100%)}
+#chat{position:absolute;left:0;right:0;top:20px}
+.msg{position:absolute;left:0;right:0;will-change:transform,opacity}
+.msg .av{position:absolute;left:56px;top:0;width:72px;height:72px;font-size:36px}
+.a .body{margin-left:150px;margin-right:60px}
+.u .body{display:flex;justify-content:flex-end;margin-right:56px;margin-left:200px}
+.bub{display:inline-block;max-width:830px;border-radius:12px 40px 40px 40px;background:var(--bubble);color:var(--ink);
+  padding:28px 36px;font-size:46px;line-height:1.38;font-weight:600;box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.u .bub{border-radius:40px 12px 40px 40px;background:linear-gradient(180deg,#4b87ff,var(--user));color:#fff;max-width:760px}
+.hl{background:linear-gradient(transparent 52%,rgba(255,107,74,.45) 52%);font-weight:800;padding:0 2px}
+.u .hl{background:none;color:#ffe08a}
+.typing{display:inline-flex;gap:14px;background:var(--bubble);border-radius:12px 40px 40px 40px;padding:30px 36px}
+.typing i{width:18px;height:18px;border-radius:50%;background:#9aa2ae}
+
+/* cards (assistant side) */
+.card{width:870px;border-radius:12px 36px 36px 36px;background:#fff;color:var(--ink);overflow:hidden;box-shadow:0 40px 80px -36px rgba(0,0,0,.9)}
+.card .ch{display:flex;align-items:center;gap:14px;padding:26px 34px;background:#f1ede6;border-bottom:1px solid #e6e0d6;font-size:32px;font-weight:800}
+.card .ch .tag{margin-left:auto;font-family:var(--mono);font-size:20px;letter-spacing:.12em;color:var(--ink2);font-weight:400}
+.card .cb{padding:14px 34px 26px}
+.brow{display:flex;align-items:center;padding:22px 0;border-bottom:2px dashed #e7e2da}
+.brow:last-child{border-bottom:0}
+.brow .l b{display:block;font-size:40px;font-weight:800}
+.brow .l span{display:block;font-size:27px;color:var(--ink2);margin-top:4px}
+.brow .amt{margin-left:auto;font-family:"Inter";font-weight:800;font-size:54px;color:#e04a2b;letter-spacing:-.02em}
+.btotal{display:flex;align-items:center;margin-top:10px;padding:26px 30px;border-radius:24px;background:var(--ink);color:#fff}
+.btotal b{font-size:38px}
+.btotal .amt{margin-left:auto;font-family:"Inter";font-weight:900;font-size:72px;color:var(--coral);letter-spacing:-.03em}
+.bignum{width:870px;border-radius:12px 36px 36px 36px;background:linear-gradient(160deg,#20242d,#16191f);border:1px solid var(--line);padding:34px 40px 38px}
+.bignum .lb{font-size:30px;color:var(--muted);font-weight:600}
+.bignum .n{font-family:"Inter";font-weight:900;font-size:150px;line-height:1.05;letter-spacing:-.04em;margin-top:6px}
+.bignum .n.coral{color:var(--coral)}
+.bignum .sb{font-size:34px;color:#dfe4ec;margin-top:8px;font-weight:600}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:26px 30px 10px}
+.cmp .col{border-radius:24px;padding:24px 26px 26px;background:#f6f3ee}
+.cmp .col.hot{background:#fff1ec;outline:3px solid rgba(255,107,74,.55)}
+.cmp .col .nm{font-size:30px;font-weight:800}
+.cmp .col .rt{font-family:"Inter";font-size:40px;font-weight:800;margin-top:10px;color:var(--ink2)}
+.cmp .col .fee{font-family:"Inter";font-size:84px;font-weight:900;letter-spacing:-.03em;margin-top:6px}
+.cmp .col.hot .fee{color:#e04a2b}
+.cmp .bar{height:18px;border-radius:9px;background:#e6e0d6;margin-top:14px;overflow:hidden}
+.cmp .bar i{display:block;height:100%;border-radius:9px;background:var(--ink2)}
+.cmp .col.hot .bar i{background:var(--coral)}
+.cmp-foot{display:flex;align-items:center;gap:16px;padding:18px 34px 28px;font-size:28px;color:var(--ink2)}
+.badge{display:inline-flex;align-items:center;gap:10px;font-size:34px;font-weight:900;color:#fff;background:var(--coral);border-radius:999px;padding:10px 26px}
+.todo .it{display:flex;align-items:center;gap:24px;padding:24px 0;border-bottom:2px dashed #e7e2da;font-size:40px;font-weight:700}
+.todo .it:last-child{border-bottom:0}
+.todo .box{flex:none;width:56px;height:56px;border-radius:16px;border:4px solid #c9c2b6;display:grid;place-items:center;font-size:36px;color:#fff;font-weight:900}
+.todo .it.on .box{background:var(--mint);border-color:var(--mint)}
+.todo .it .n{font-family:"Inter";color:var(--ink2);font-weight:800;width:44px}
+.follow{width:870px;border-radius:36px;background:linear-gradient(160deg,#20242d,#15181e);border:1px solid var(--line);padding:40px;display:flex;align-items:center;gap:30px}
+.follow .av{position:static;width:150px;height:150px;font-size:76px;flex:none}
+.follow b{display:block;font-size:52px;font-weight:900}
+.follow span{display:block;font-size:30px;color:#cfd5df;margin-top:8px;line-height:1.4}
+.follow .btn{margin-top:22px;display:inline-flex;align-items:center;justify-content:center;width:300px;height:84px;border-radius:999px;background:var(--coral);
+  font-size:38px;font-weight:900;color:#fff}
+.follow .btn.done{background:#2a2f39;color:var(--mint)}
+.note{font-size:26px;color:var(--muted);line-height:1.5;padding:4px 0 0 150px;margin-right:60px}
+
+/* captions */
+#cap{position:absolute;left:60px;right:60px;top:1350px;height:120px;display:flex;justify-content:center;align-items:center}
+.capline{font-size:56px;font-weight:900;color:#fff;text-align:center;line-height:1.2;letter-spacing:.01em;
+  text-shadow:0 4px 0 rgba(0,0,0,.55),0 0 24px rgba(0,0,0,.6)}
+.capline b{color:#ffd166}
+#src{position:absolute;left:60px;right:60px;top:1486px;font-family:var(--mono);font-size:19px;letter-spacing:.06em;color:#6c7483;text-align:center}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="grain"></div>
+  <div class="hdr">
+    <div class="back"></div>
+    <div class="av">T</div>
+    <div class="who"><b>Tony 助理</b><span><i></i>在线 · 跨境实操</span></div>
+    <div class="ep" id="epno">NO.001</div>
+  </div>
+  <div class="pin"><em>置顶</em><span id="topic"></span></div>
+  <div id="view"><div id="chat"></div></div>
+  <div id="cap"></div>
+  <div id="src"></div>
+</div>
+<script>
+  const q = new URLSearchParams(location.search);
+  document.write(`<script src="episodes/${q.get("ep") || "ep001"}.js"><\/script><script src="engine.js"><\/script>`);
+</script>
+</body>
+</html>
