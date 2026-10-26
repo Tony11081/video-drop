@@ -1,0 +1,681 @@
+{
+  "id": "m001",
+  "name": "微缩跨境城 · 一单出海（20 秒品牌样片）",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "duration": 20.0,
+  "bpm": 120,
+  "seed": 2026,
+  "title": {
+    "main": "TonyBook 跨境",
+    "sub": "微缩跨境城 · 一单出海",
+    "scale": "比例 1:150",
+    "pos": [
+      0,
+      0,
+      352
+    ],
+    "width": 226
+  },
+  "events": {
+    "sigEwYellow": 1.25,
+    "sigEwRed": 1.65,
+    "sigNsGreen": 1.95,
+    "sigNsYellow": 4.2,
+    "sigNsRed": 4.6,
+    "sigEwGreen": 4.9,
+    "busArrive": 2.6,
+    "busDepart": 4.45,
+    "glint": 3.35,
+    "pull1Out": 4.55,
+    "pull1Move": 5.0,
+    "pull1Land": 5.4,
+    "pull1In": 5.95,
+    "craneLift": 5.5,
+    "pull2Out": 7.75,
+    "pull2Move": 8.1,
+    "pull2Land": 8.45,
+    "pull2In": 9.0,
+    "buildup": 11.0,
+    "gateDown": 11.0,
+    "trainIn": 12.5,
+    "birdsUp": 12.95,
+    "birdsLand": 15.2,
+    "gateUp": 15.85,
+    "revealStart": 16.0,
+    "revealEnd": 18.5,
+    "titleHit": 18.5,
+    "end": 20.0
+  },
+  "train": {
+    "cars": 5,
+    "s0": -52,
+    "speed": 90,
+    "track": 1,
+    "carLen": 16
+  },
+  "camera": {
+    "fov": 30,
+    "drift": 0.0,
+    "track": {
+      "t0": 12.4,
+      "s0": 30,
+      "creep": 8,
+      "accelAt": 13.5,
+      "lockAt": 14.2,
+      "v": 90,
+      "brakeAt": 15.1,
+      "stopAt": 15.9,
+      "off": 0
+    },
+    "keys": [
+      {
+        "t": 0.0,
+        "target": [
+          -51,
+          0,
+          74
+        ],
+        "dist": 236,
+        "pitch": 47,
+        "yaw": 6,
+        "trackMix": 0
+      },
+      {
+        "t": 5.0,
+        "target": [
+          -55,
+          0,
+          52.3
+        ],
+        "dist": 226,
+        "pitch": 46,
+        "yaw": 6,
+        "trackMix": 0,
+        "ease": "linear"
+      },
+      {
+        "t": 5.4,
+        "target": [
+          54,
+          0,
+          -102
+        ],
+        "dist": 214,
+        "pitch": 45,
+        "yaw": -4,
+        "trackMix": 0,
+        "ease": "inOut"
+      },
+      {
+        "t": 8.1,
+        "target": [
+          54,
+          0,
+          -123
+        ],
+        "dist": 204,
+        "pitch": 44,
+        "yaw": -4,
+        "trackMix": 0,
+        "ease": "linear"
+      },
+      {
+        "t": 8.45,
+        "target": [
+          50,
+          0,
+          80
+        ],
+        "dist": 214,
+        "pitch": 44,
+        "yaw": 0,
+        "trackMix": 0,
+        "ease": "inOut"
+      },
+      {
+        "t": 11.0,
+        "target": [
+          49,
+          0,
+          73
+        ],
+        "dist": 208,
+        "pitch": 43,
+        "yaw": 0,
+        "trackMix": 0,
+        "ease": "linear"
+      },
+      {
+        "t": 12.4,
+        "rail": [
+          30,
+          0,
+          0
+        ],
+        "dist": 176,
+        "pitch": 41,
+        "yaw": -9,
+        "trackMix": 0
+      },
+      {
+        "t": 12.45,
+        "rail": [
+          30,
+          0,
+          0
+        ],
+        "dist": 176,
+        "pitch": 41,
+        "yaw": -9,
+        "trackMix": 1,
+        "ease": "linear"
+      },
+      {
+        "t": 15.9,
+        "rail": [
+          190.1,
+          0,
+          0
+        ],
+        "dist": 176,
+        "pitch": 41,
+        "yaw": -9,
+        "trackMix": 1,
+        "ease": "linear"
+      },
+      {
+        "t": 16.0,
+        "rail": [
+          190.1,
+          0,
+          0
+        ],
+        "dist": 178,
+        "pitch": 41,
+        "yaw": -9,
+        "trackMix": 0,
+        "ease": "linear"
+      },
+      {
+        "t": 18.5,
+        "target": [
+          0,
+          -6,
+          104
+        ],
+        "dist": 1235,
+        "pitch": 55,
+        "yaw": 0,
+        "trackMix": 0,
+        "ease": "inOut"
+      },
+      {
+        "t": 20.0,
+        "target": [
+          0,
+          -6,
+          102
+        ],
+        "dist": 1222,
+        "pitch": 55,
+        "yaw": 0,
+        "trackMix": 0,
+        "ease": "linear"
+      }
+    ]
+  },
+  "focus": {
+    "keys": [
+      {
+        "t": 0.0,
+        "sharp": 9,
+        "k": 0.6,
+        "cocMax": 26,
+        "blur": 0,
+        "angle": 0,
+        "tilt": 0,
+        "railMix": 0,
+        "ahead": 0
+      },
+      {
+        "t": 4.55,
+        "sharp": 9,
+        "k": 0.6,
+        "blur": 0
+      },
+      {
+        "t": 5.0,
+        "blur": 1,
+        "ease": "in"
+      },
+      {
+        "t": 5.4,
+        "blur": 1,
+        "sharp": 10,
+        "k": 0.55
+      },
+      {
+        "t": 5.95,
+        "blur": 0,
+        "ease": "out"
+      },
+      {
+        "t": 7.75,
+        "blur": 0
+      },
+      {
+        "t": 8.1,
+        "blur": 1,
+        "ease": "in"
+      },
+      {
+        "t": 8.45,
+        "blur": 1,
+        "sharp": 10,
+        "k": 0.6
+      },
+      {
+        "t": 9.0,
+        "blur": 0,
+        "ease": "out"
+      },
+      {
+        "t": 11.0,
+        "sharp": 10,
+        "k": 0.6,
+        "angle": 0,
+        "tilt": 0,
+        "railMix": 0
+      },
+      {
+        "t": 12.4,
+        "sharp": 7,
+        "k": 0.75,
+        "angle": 1,
+        "tilt": 0.88,
+        "railMix": 1
+      },
+      {
+        "t": 16.0,
+        "sharp": 7,
+        "k": 0.75,
+        "cocMax": 26,
+        "angle": 1,
+        "tilt": 0.88,
+        "railMix": 1,
+        "ahead": 0
+      },
+      {
+        "t": 18.5,
+        "sharp": 44,
+        "k": 0.075,
+        "cocMax": 30,
+        "angle": 0,
+        "tilt": 0,
+        "railMix": 0,
+        "ahead": -275,
+        "ease": "inOut"
+      },
+      {
+        "t": 20.0,
+        "sharp": 44,
+        "k": 0.075,
+        "cocMax": 30,
+        "angle": 0,
+        "tilt": 0,
+        "railMix": 0,
+        "ahead": -273
+      }
+    ]
+  },
+  "sun": {
+    "keys": [
+      {
+        "t": 0,
+        "az": 102,
+        "el": 14,
+        "color": [
+          1.0,
+          0.74,
+          0.48
+        ],
+        "int": 3.3,
+        "sky": [
+          0.92,
+          0.8,
+          0.72
+        ],
+        "ground": [
+          0.55,
+          0.45,
+          0.35
+        ],
+        "hemi": 0.75,
+        "bg": [
+          0.96,
+          0.86,
+          0.76
+        ]
+      },
+      {
+        "t": 5,
+        "az": 120,
+        "el": 28,
+        "color": [
+          1.0,
+          0.86,
+          0.68
+        ],
+        "int": 3.6,
+        "sky": [
+          0.85,
+          0.86,
+          0.86
+        ],
+        "ground": [
+          0.55,
+          0.5,
+          0.42
+        ],
+        "hemi": 0.85,
+        "bg": [
+          0.9,
+          0.9,
+          0.88
+        ]
+      },
+      {
+        "t": 11,
+        "az": 168,
+        "el": 57,
+        "color": [
+          1.0,
+          0.98,
+          0.95
+        ],
+        "int": 4.0,
+        "sky": [
+          0.78,
+          0.88,
+          1.0
+        ],
+        "ground": [
+          0.58,
+          0.54,
+          0.46
+        ],
+        "hemi": 0.95,
+        "bg": [
+          0.86,
+          0.91,
+          0.96
+        ]
+      },
+      {
+        "t": 16,
+        "az": 196,
+        "el": 61,
+        "color": [
+          1.0,
+          0.97,
+          0.92
+        ],
+        "int": 4.0,
+        "sky": [
+          0.8,
+          0.88,
+          1.0
+        ],
+        "ground": [
+          0.6,
+          0.55,
+          0.47
+        ],
+        "hemi": 0.95,
+        "bg": [
+          0.86,
+          0.9,
+          0.95
+        ]
+      },
+      {
+        "t": 20,
+        "az": 204,
+        "el": 58,
+        "color": [
+          1.0,
+          0.95,
+          0.88
+        ],
+        "int": 3.9,
+        "sky": [
+          0.85,
+          0.87,
+          0.92
+        ],
+        "ground": [
+          0.62,
+          0.55,
+          0.46
+        ],
+        "hemi": 0.95,
+        "bg": [
+          0.88,
+          0.86,
+          0.82
+        ]
+      }
+    ]
+  },
+  "grade": {
+    "keys": [
+      {
+        "t": 0,
+        "exposure": 1.05,
+        "sat": 1.32,
+        "contrast": 1.12,
+        "lift": 0.035,
+        "vignette": 0.24,
+        "warm": [
+          1.07,
+          0.98,
+          0.88
+        ],
+        "bloom": 0.35
+      },
+      {
+        "t": 6,
+        "exposure": 1.0,
+        "sat": 1.3,
+        "contrast": 1.12,
+        "lift": 0.03,
+        "vignette": 0.22,
+        "warm": [
+          1.03,
+          1.0,
+          0.95
+        ],
+        "bloom": 0.3
+      },
+      {
+        "t": 11,
+        "exposure": 0.98,
+        "sat": 1.28,
+        "contrast": 1.14,
+        "lift": 0.03,
+        "vignette": 0.22,
+        "warm": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bloom": 0.32
+      },
+      {
+        "t": 16,
+        "exposure": 0.98,
+        "sat": 1.28,
+        "contrast": 1.14,
+        "lift": 0.03,
+        "vignette": 0.22,
+        "warm": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "bloom": 0.32
+      },
+      {
+        "t": 18.5,
+        "exposure": 1.0,
+        "sat": 1.22,
+        "contrast": 1.1,
+        "lift": 0.035,
+        "vignette": 0.28,
+        "warm": [
+          1.03,
+          1.0,
+          0.96
+        ],
+        "bloom": 0.3
+      },
+      {
+        "t": 20,
+        "exposure": 1.0,
+        "sat": 1.22,
+        "contrast": 1.1,
+        "lift": 0.035,
+        "vignette": 0.28,
+        "warm": [
+          1.03,
+          1.0,
+          0.96
+        ],
+        "bloom": 0.3
+      }
+    ]
+  },
+  "render": {
+    "shutter": 0.75,
+    "subframesDefault": 4,
+    "subframes": [
+      {
+        "t0": 4.5,
+        "t1": 6.0,
+        "n": 5
+      },
+      {
+        "t0": 7.7,
+        "t1": 9.1,
+        "n": 5
+      },
+      {
+        "t0": 12.3,
+        "t1": 16.0,
+        "n": 6
+      },
+      {
+        "t0": 16.0,
+        "t1": 18.6,
+        "n": 5
+      }
+    ],
+    "shadowEverySub": [
+      [
+        12.3,
+        16.0
+      ],
+      [
+        4.9,
+        5.5
+      ],
+      [
+        8.0,
+        8.55
+      ]
+    ]
+  },
+  "keyframes": [
+    0,
+    0.9,
+    2.7,
+    3.55,
+    4.75,
+    5.2,
+    6.4,
+    7.6,
+    8.3,
+    9.6,
+    11.2,
+    12.3,
+    13.3,
+    14.4,
+    15.3,
+    16.6,
+    17.6,
+    19.4
+  ],
+  "audio": {
+    "musicGainDb": -6,
+    "sfxGainDb": 0,
+    "sections": [
+      {
+        "name": "前奏 · 醒来",
+        "t0": 0,
+        "t1": 5,
+        "inst": [
+          "musicbox",
+          "pluck"
+        ]
+      },
+      {
+        "name": "律动 · 城市运转",
+        "t0": 5,
+        "t1": 11,
+        "inst": [
+          "musicbox",
+          "pluck",
+          "marimba",
+          "kick",
+          "shaker"
+        ]
+      },
+      {
+        "name": "蓄势",
+        "t0": 11,
+        "t1": 12.5,
+        "inst": [
+          "pluck",
+          "shaker",
+          "riser"
+        ]
+      },
+      {
+        "name": "全编制 · 穿城",
+        "t0": 12.5,
+        "t1": 16,
+        "inst": [
+          "musicbox",
+          "pluck",
+          "marimba",
+          "kick",
+          "snare",
+          "shaker",
+          "bass"
+        ]
+      },
+      {
+        "name": "回落 · 揭示",
+        "t0": 16,
+        "t1": 20,
+        "inst": [
+          "musicbox",
+          "pluck",
+          "pad"
+        ]
+      }
+    ]
+  }
+}
