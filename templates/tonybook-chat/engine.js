@@ -7,7 +7,8 @@
                                            3.5 = halfway through line 3. Card parts (rows, items) have their own `at`.
    kinds: user (fan's question, right) · text (assistant bubble) · big (big number card) · bill (receipt rows +
           total) · cmp (two-column comparison) · todo (checklist) · follow (CTA card) · note (small footnote).
-   `clear: true` starts a fresh chat page (old messages slide away). Text uses **word** for coral highlight. */
+   `clear: true` starts a fresh chat page (old messages slide away). Text uses **word** for coral highlight.
+   `instant: true` puts a message on screen fully drawn from frame 0 (use it for the hook: the first frame is the feed preview). */
 (function () {
   const E = window.EP, K = E.speed;
   const cl = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
@@ -39,7 +40,8 @@
   let page = -1;
   E.msgs.forEach((m, i) => {
     if (m.clear || i === 0) page++;
-    const a = T(m.at);
+    // instant: on screen from the very first frame, fully drawn (the first frame is what the feed shows)
+    const a = m.instant ? -1 : T(m.at);
     const el = document.createElement("div");
     el.className = "msg " + (m.kind === "user" ? "u" : "a");
     const parts = []; // timed inner parts: {el, a, fx}
@@ -102,9 +104,9 @@
     }
     el.innerHTML = avatar + html;
     chat.appendChild(el);
-    const lead = m.kind === "user" || m.kind === "note" ? 0 : (m.typing ?? 0.4) * K;
+    const lead = m.instant || m.kind === "user" || m.kind === "note" ? 0 : (m.typing ?? 0.4) * K;
     M.push({ m, el, a, s: a - lead, page, lead, parts: wants.map((w) => ({ ...w, el: el.querySelector(w.q) })) });
-    if (m.kind !== "note") SFX.push([a, m.kind === "user" ? "send" : "pop"]);
+    if (m.kind !== "note" && !m.instant) SFX.push([a, m.kind === "user" ? "send" : "pop"]);
   });
 
   /* typing bubble (one, reused) */
@@ -188,7 +190,7 @@
       x.el.style.visibility = vis ? "visible" : "hidden";
       if (x.page === cur && t >= x.s && t < x.a && x.lead > 0) typ = x;
       if (!vis) return;
-      const e = eo(P((t - x.a) / K, 0, 0.32));
+      const e = x.m.instant ? 1 : eo(P((t - x.a) / K, 0, 0.32));
       x.el.style.opacity = e;
       x.el.style.transform = `translateY(${(1 - e) * 36}px) scale(${0.97 + 0.03 * e})`;
       x.el.style.transformOrigin = x.m.kind === "user" ? "right bottom" : "left top";
