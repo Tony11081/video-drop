@@ -1,6 +1,6 @@
 {
   "id": "m001",
-  "name": "微缩跨境城 · 一单出海（20 秒品牌样片）",
+  "name": "微缩跨境城 · 一单出海（Etsy-Tony 20 秒品牌样片）",
   "width": 1080,
   "height": 1920,
   "fps": 30,
@@ -8,7 +8,7 @@
   "bpm": 120,
   "seed": 2026,
   "title": {
-    "main": "TonyBook 跨境",
+    "main": "Etsy-Tony",
     "sub": "微缩跨境城 · 一单出海",
     "scale": "比例 1:150",
     "pos": [
@@ -677,5 +677,9 @@
         ]
       }
     ]
+  },
+  "brand": {
+    "name": "Etsy-Tony",
+    "short": "ET"
   }
 }

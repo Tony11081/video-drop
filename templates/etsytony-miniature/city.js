@@ -1,4 +1,4 @@
-// 「TonyBook 微缩跨境城」固定布景：一块 320×600 的城市沙盘（单位：米，按 1:150 做成桌上模型）。
+// 「微缩跨境城」固定布景（品牌名取自节拍表 brand 字段）：一块 320×600 的城市沙盘（单位：米，按 1:150 做成桌上模型）。
 // 坐标：x 向东，z 向南，y 向上。相机默认朝北（-z）俯拍，画面上方 = 北 = 远处。
 // 所有动态都只由时间 t 决定；随机数全部固定种子。
 import * as THREE from './three.module.min.js';
@@ -147,7 +147,7 @@ function headingOf(path, i) {
 // ———————————————————————————————————————— 城市 ————————————————————————————————————————
 export class City {
   constructor(scene, cue) {
-    this.scene = scene; this.cue = cue; this.ev = cue.events; this.dyn = [];
+    this.scene = scene; this.cue = cue; this.brand = cue.brand || { name: 'TonyBook', short: 'TB' }; this.ev = cue.events; this.dyn = [];
     this.T = makeTextures();
     this.rnd = rng(cue.seed || 2026);
     this.mats();
@@ -778,7 +778,7 @@ export class City {
     m.box(0.2, 5.5, 8, W.x1 + 0.05, 2.9, W.z0 + 10, 0x2a2d33);
     m.box(0.25, 0.8, 8.6, W.x1 + 0.1, 5.9, W.z0 + 10, 0x9aa3ad);
     m.box(0.2, 5.5, 8, W.x1 + 0.05, 2.9, W.z0 + 22, 0xb8bec6);
-    signs.push({ tex: signTexture([{ text: 'TonyBook 仓', size: 0.6 }], { bg: '#ffffff', fg: '#ff6b4a', border: '#ff6b4a' }), w: 13, h: 2.6, pos: [W.x1 + 0.15, 7.4, (W.z0 + W.z1) / 2], ry: Math.PI / 2, face: 'x' });
+    signs.push({ tex: signTexture([{ text: this.brand.name + ' 仓', size: 0.6 }], { bg: '#ffffff', fg: '#ff6b4a', border: '#ff6b4a' }), w: 13, h: 2.6, pos: [W.x1 + 0.15, 7.4, (W.z0 + W.z1) / 2], ry: Math.PI / 2, face: 'x' });
     // 货场地面、箱子垛
     m.box(16, 0.08, W.z1 - W.z0 + 6, W.x1 + 8, 0.09, (W.z0 + W.z1) / 2, 0xbab3a6);
     for (let k = 0; k < 8; k++) m.box(0.15, 0.04, 2.6, W.x1 + 4 + k * 0.01, 0.13, W.z0 + 2 + k * 3.8, 0xf2c230);
@@ -802,7 +802,7 @@ export class City {
     m.box(2.62, 0.9, 7.2, tx, 2.2, tz + 1.0, 0xff6b4a); // 涂装条
     for (const wz of [tz - 1.8, tz + 2.6, tz + 5.6]) for (const wx of [-1.2, 1.2]) m.box(0.5, 1.0, 1.0, tx + wx, 0.5, wz, 0x1f2328);
     this.truckA = { x: tx, z: tz };
-    signs.push({ tex: signTexture([{ text: 'TB 跨境物流', size: 0.55 }], { bg: '#ffffff', fg: '#ff6b4a' }), w: 5.5, h: 1.2, pos: [tx + 1.32, 2.6, tz + 0.6], ry: Math.PI / 2, face: 'x' });
+    signs.push({ tex: signTexture([{ text: this.brand.short + ' 跨境物流', size: 0.55 }], { bg: '#ffffff', fg: '#ff6b4a' }), w: 5.5, h: 1.2, pos: [tx + 1.32, 2.6, tz + 0.6], ry: Math.PI / 2, face: 'x' });
     // 快递驿站等店招（路口四周）
     const names = ['快递驿站', '义新小商品', '打包耗材', '跨境服务站', '面馆', '便利店'];
     const ncolors = ['#2d6cdf', '#e23b2e', '#3ddc97', '#ff6b4a', '#f2c230', '#1f2328'];
@@ -893,7 +893,7 @@ export class City {
     }
     cont.done();
     // 集装箱侧面字（TBX）：做成几块贴片
-    const tbx = signTexture([{ text: 'TBX', size: 0.7, weight: 900 }], { bg: 'rgba(0,0,0,0)', fg: '#ffffff', w: 256, h: 96 });
+    const tbx = signTexture([{ text: this.brand.short + 'X', size: 0.7, weight: 900 }], { bg: 'rgba(0,0,0,0)', fg: '#ffffff', w: 256, h: 96 });
     // 门式吊车：两条腿跨在岸边与驳船之间
     const cx = P.x0 + 20;
     this.gantry = { x: cx };
@@ -1066,7 +1066,7 @@ export class City {
     this.placeSigns(signs);
     // 旗杆和旗子（气浪会让旗子摆动）
     this.flags = [];
-    const flagMat = new THREE.MeshPhongMaterial({ map: signTexture([{ text: 'TB', size: 0.6 }], { bg: '#ff6b4a', w: 128, h: 96 }), shininess: 36, side: THREE.DoubleSide });
+    const flagMat = new THREE.MeshPhongMaterial({ map: signTexture([{ text: this.brand.short, size: 0.6 }], { bg: '#ff6b4a', w: 128, h: 96 }), shininess: 36, side: THREE.DoubleSide });
     const poleM = new Merger();
     for (let k = 0; k < 4; k++) {
       const p = railPoint(STATION.s1 + 4 + k * 4, -15);
@@ -1534,10 +1534,10 @@ export class City {
       g.fillStyle = '#d9dbe0'; g.fillRect(w * 0.12, h * 0.28, 22, h * 0.48); g.fillRect(w * 0.86, h * 0.28, 22, h * 0.48);
       if (!nose) {
         g.fillStyle = '#ff6b4a'; g.font = `900 ${h * 0.17}px "Noto Sans CJK SC"`; g.textAlign = 'left'; g.textBaseline = 'middle';
-        g.fillText('TonyBook 快线', w * 0.2, h * 0.62);
+        g.fillText(this.brand.name + ' 快线', w * 0.2, h * 0.62);
       } else {
         g.fillStyle = '#ff6b4a'; g.beginPath(); g.moveTo(0, 0); g.lineTo(w * 0.26, 0); g.lineTo(w * 0.15, h * 0.7); g.lineTo(0, h * 0.7); g.fill();
-        g.fillStyle = '#ffffff'; g.font = `900 ${h * 0.2}px "Noto Sans CJK SC"`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('TB', w * 0.5, h * 0.62);
+        g.fillStyle = '#ffffff'; g.font = `900 ${h * 0.2}px "Noto Sans CJK SC"`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(this.brand.short, w * 0.5, h * 0.62);
       }
     });
     const texCar = livery(false), texNose = livery(true);
@@ -1601,11 +1601,11 @@ export class City {
       for (const bz of [-carLen * 0.33, carLen * 0.33]) { const b = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.9, 3.4), new THREE.MeshPhongMaterial({ color: 0x2b2f36, shininess: 36 })); b.position.set(0, 0.75, bz); grp.add(b); }
       if (k < cars - 1) { const g2 = new THREE.Mesh(new THREE.BoxGeometry(2.8, 3.0, gapL + 0.3), new THREE.MeshPhongMaterial({ color: 0x3a3f46, shininess: 27 })); g2.position.set(0, 3.2, -carLen / 2 - gapL / 2); grp.add(g2); }
       if (k === 1 || k === cars - 2) {
-        const pan = new THREE.Group();
-        const base = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.25, 2.2), this.M.steel); base.position.y = 6.05; pan.add(base);
-        const arm1 = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.12, 1.9), this.M.steel); arm1.position.set(0, 6.5, -0.2); arm1.rotation.x = 0.55; pan.add(arm1);
-        const arm2 = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.12, 1.4), this.M.steel); arm2.position.set(0, 6.9, -0.4); arm2.rotation.x = -0.7; pan.add(arm2);
-        const head = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.1, 0.3), this.M.steel); head.position.set(0, 7.3, -0.6); pan.add(head);
+        const pan = new THREE.Group(); const panMat = new THREE.MeshPhongMaterial({ color: 0x9aa3ad, shininess: 80 });
+        const base = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.18, 1.4), panMat); base.position.y = 6.05; pan.add(base);
+        const arm1 = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.12, 1.9), panMat); arm1.position.set(0, 6.5, -0.2); arm1.rotation.x = 0.55; pan.add(arm1);
+        const arm2 = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.12, 1.4), panMat); arm2.position.set(0, 6.9, -0.4); arm2.rotation.x = -0.7; pan.add(arm2);
+        const head = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.1, 0.3), panMat); head.position.set(0, 7.3, -0.6); pan.add(head);
         pan.children.forEach((c) => (c.castShadow = true));
         grp.add(pan);
       }
@@ -1711,7 +1711,7 @@ export class City {
     const W = this.cue.title.width || 226, H = W * 640 / 2048;
     const plate = new THREE.Group();
     const face = new THREE.Mesh(new THREE.PlaneGeometry(W, H), new THREE.MeshPhongMaterial({ map: tex, shininess: 58, emissive: 0xffffff, emissiveMap: tex, emissiveIntensity: 0.25 }));
-    face.position.z = 1.01; plate.add(face);
+    face.position.z = 1.6; face.material.polygonOffset = true; face.material.polygonOffsetFactor = -4; plate.add(face);
     const back = new THREE.Mesh(new THREE.BoxGeometry(W + 3, H + 3, 2), new THREE.MeshPhongMaterial({ color: 0x2a211b, shininess: 54 })); plate.add(back);
     back.castShadow = true; face.receiveShadow = true;
     const stand = new THREE.Mesh(new THREE.BoxGeometry(W * 0.7, 2.4, 14), new THREE.MeshPhongMaterial({ color: 0x2a211b, shininess: 45 })); stand.position.set(0, -H / 2 - 0.4, -4); plate.add(stand);
