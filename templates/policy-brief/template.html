@@ -42,6 +42,13 @@ body{font-family:var(--sans);color:var(--text);-webkit-font-smoothing:antialiase
 #grain{position:absolute;inset:-60px;z-index:60;pointer-events:none;opacity:.045;mix-blend-mode:multiply;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
+/* early follow prompt (CTA #1) — sits between the content zone and the caption */
+#follow{position:absolute;left:50%;top:1296px;transform:translateX(-50%);opacity:0;display:inline-flex;align-items:center;gap:12px;
+  padding:12px 24px 12px 12px;border-radius:999px;background:rgba(255,255,255,.88);border:1px solid var(--line-strong);
+  box-shadow:0 10px 30px rgba(20,24,16,.10);backdrop-filter:blur(14px);white-space:nowrap}
+#follow .plus{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;
+  background:var(--signal);color:#15171a;font:800 22px/1 var(--sans, sans-serif);box-shadow:0 0 0 4px rgba(200,255,0,.22)}
+#follow .ft{font:700 24px/1 var(--sans, sans-serif);color:#15171a;letter-spacing:.02em}
 /* ---------- HUD ---------- */
 #hud{position:absolute;inset:0;z-index:40;pointer-events:none}
 #brand{position:absolute;left:72px;top:138px;display:flex;align-items:center;gap:16px}
@@ -200,6 +207,7 @@ body{font-family:var(--sans);color:var(--text);-webkit-font-smoothing:antialiase
     <div id="epi"><span class="pulse"></span><span id="epitext"></span></div>
     <div id="rail"><div class="track"></div><div class="fill"></div></div>
     <div id="src"></div>
+    <div id="follow"></div>
     <div id="cap"></div>
   </div>
   <div id="grain"></div>

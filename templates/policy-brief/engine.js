@@ -372,6 +372,12 @@
   const capHost = document.getElementById("cap");
   let capCur = -1, capEl = null;
 
+  /* early follow prompt (call to action #1, within the first 15 output seconds) */
+  const FOLLOW = E.follow === false ? null : (E.follow || "关注 · 每周一条 Etsy 政策速递");
+  const FW = E.followAt || [7, 10.5];               // output seconds
+  const followEl = document.getElementById("follow"), srcEl = document.getElementById("src");
+  if (followEl) followEl.innerHTML = FOLLOW ? `<span class="plus">＋</span><span class="ft">${esc(FOLLOW)}</span>` : "";
+
   /* ---------- per-frame ---------- */
   function apply(a, u) {
     const n = a.n, f = a.fx;
@@ -413,15 +419,36 @@
     let ci = -1; CAP.forEach((c, i) => { if (t >= c.a - 0.04 && t < c.b + 0.05) ci = i; });
     if (ci !== capCur) { capHost.innerHTML = ci >= 0 ? `<div class="capline">${CAP[ci].h}</div>` : ""; capEl = capHost.firstChild; capCur = ci; }
     if (capEl) { const e = eo(cl((t - CAP[ci].a) / K / 0.22)); capEl.style.opacity = e; capEl.style.transform = `translateY(${(1 - e) * 18}px)`; }
+
+    if (followEl && FOLLOW) {
+      const o = t / K, inn = eo(P(o, FW[0], 0.35)), out = eio(P(o, FW[1] - 0.3, 0.3)), e = inn * (1 - out);
+      followEl.style.opacity = e; if (srcEl) srcEl.style.opacity = 1 - e; followEl.style.transform = `translate(-50%, ${(1 - inn) * 22}px) scale(${0.94 + 0.06 * back(P(o, FW[0], 0.45))})`;
+    }
   }
 
   /* ---------- sound cues (voice seconds) ---------- */
-  const SFX = [];
+  /* RAW = every animation event (used by check.py to measure visual rhythm).
+     SFX = what we actually hear: sound only marks events — at most one cue per scene
+     (the strongest), at least sfxGap output seconds apart; ticks and soft blips are dropped.
+     Head-creator measurements: Chinese talking-head channels use ~1–3 effects/min, never one per cut.
+     EP.sfx = "full" restores the old every-animation layer. */
+  const RAW = [];
   S.forEach((s) => {
-    if (s.i > 0) SFX.push([+s.g.start.toFixed(3), "whoosh"]);
-    (s.def.cues || []).forEach(([u, k]) => { if (u < s.g.D) SFX.push([+(s.g.start + u * K).toFixed(3), k]); });
+    if (s.i > 0) RAW.push([+s.g.start.toFixed(3), "whoosh", s.i]);
+    (s.def.cues || []).forEach(([u, k]) => { if (u < s.g.D) RAW.push([+(s.g.start + u * K).toFixed(3), k, s.i]); });
   });
-  window.SFX = SFX.sort((a, b) => a[0] - b[0]);
+  RAW.sort((a, b) => a[0] - b[0]);
+  let SFX;
+  if (E.sfx === "full") SFX = RAW.map(([t, k]) => [t, k]);
+  else {
+    const PR = { stamp: 6, scan: 5, bad: 4, ok: 3, whoosh: 2 }, best = {};
+    RAW.forEach(([t, k, i]) => { const p = PR[k]; if (p !== undefined && (!best[i] || p > best[i][2])) best[i] = [t, k, p]; });
+    const minGap = (E.sfxGap || 8) * K; let last = -1e9; SFX = [];
+    Object.values(best).sort((a, b) => a[0] - b[0]).forEach(([t, k]) => { if (t - last >= minGap) { SFX.push([t, k]); last = t; } });
+  }
+  window.SFX = SFX;
+  window.EVENTS = RAW.map(([t, k]) => [t, k]);
+  window.FOLLOW_AT = FOLLOW ? FW.map((x) => +(x * K).toFixed(3)) : null;
   window.OVERLAYS = OVERLAYS;
   window.SCENES = G.map((g) => [+g.start.toFixed(3), +g.end.toFixed(3), g.scene.type]);
   window.seek = seek; window.TOTAL = TOTAL;

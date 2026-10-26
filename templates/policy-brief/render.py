@@ -29,7 +29,7 @@ def page_ctx(p):
 
 
 def write_timing(pg):
-    d = pg.evaluate("({total: TOTAL, at: VOICE_AT, sfx: SFX, overlays: OVERLAYS, caps: CAPS})")
+    d = pg.evaluate("({total: TOTAL, speed: EP.speed, at: VOICE_AT, sfx: SFX, events: EVENTS, scenes: SCENES, follow: FOLLOW_AT, overlays: OVERLAYS, caps: CAPS})")
     (OUT / "timing.json").write_text(json.dumps(d, ensure_ascii=False, indent=1))
     return d
 
