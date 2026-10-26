@@ -96,6 +96,9 @@ async def main():
             sink['fn'] = push
             t0 = time.time()
             for i in range(a, z):
+                if i > a and (i - a) % 30 == 0:  # 定期重载页面，避免长时间渲染内存涨爆（逐帧只由 t 决定，重载不影响连续性）
+                    await pg.goto(f'http://127.0.0.1:{PORT}/index.html?ep={ep}&w={W}&h={H}')
+                    await pg.wait_for_function('window.ready === true', timeout=600000)
                 r = await pg.evaluate(f'renderAndSend({i}, {1 if mode == "preview" else 0})')
                 if i % 10 == 0 or i == z - 1:
                     el = time.time() - t0; done = i - a + 1
