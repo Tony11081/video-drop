@@ -18,7 +18,7 @@
   - 钩子：「圣诞单，现在才上架已经晚了」
   - 核实：Etsy 卖家手册的节日日历和建议上架时间；美国节前物流截止时间（USPS 官方）
   - 我们的角度：我们自己的定制店正在备圣诞货
-- [ ] NO.003 · C · Etsy 新店身份验证要准备什么
+- [x] NO.003 · C · Etsy 新店身份验证要准备什么（已发 2026-10-28，ep003，标题「Etsy开店验证反复失败，可能开不了店」；核实：Etsy 帮助中心 How to Verify Your Identity on Etsy、How to Verify Your Seller Information for Etsy Payments，2026-10-28 查阅，页面未标更新日期）
   - 钩子：「Etsy 开店卡在验证，多半是这几样没备好」
   - 核实：Etsy 帮助中心的卖家身份验证文章
 - [ ] NO.004 · A · 新手为什么卖「带名字的」定制品
