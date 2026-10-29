@@ -10,7 +10,14 @@
 - 结构：反直觉提问开头（3 秒内）→ 现象 → 一条简单规则 → 扩展到生活 → 一句能转发的收尾。
 - 史实必须查证（`WebSearch`），查不到的写法改成不具体的说法。
 
-## 五套视觉模板（`looks.js`，`template.html?look=<名字>`）
+## 旗舰模板：纸光 PAPERLIGHT（`paperlight.html`）
+
+手工纸雕灯箱：月亮针孔、远山、中山、硫酸纸雾、割缝湖面、红树、芦苇、前景纸框共 7 层，每层有纸厚度边（顶边受光）、投影、纤维纹；暖光从最深处透出，萤火虫同步时整箱背光、雾、湖面反光一起呼吸。
+开场各层像立体书一样由远到近弹起（`UNFOLD` 时刻，expo 缓动）；镜头 15 秒缓慢推进，各层按视差系数 p 位移。文字左对齐留白，逐字起落（`kinetic`），关键词琥珀色；页眉 `NO. 01 / SYNCHRONOUS FIREFLIES` 字距排版。
+出样片：`python3 render.py paperlight video` → `python3 score_paperlight.py`（按 `out/paperlight-events.json` 的同步时刻对拍）→ ffmpeg 合成。
+换题目：改 `kinetic(...)` 文案、`UNFOLD`、`K(t)` 同步时刻；换场景就改几何部分（`ridge`/`grow`/`reeds`），纸的材质函数 `paper()` 不动。
+
+## 五套备选视觉模板（`looks.js`，`template.html?look=<名字>`）
 
 | look | 名字 | 气质 | 底 / 字 / 强调色 | 字体 |
 |---|---|---|---|---|

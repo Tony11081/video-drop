@@ -1,0 +1,200 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style>
+<script src="common.js"></script>
+</head>
+<body><canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// ======================================================================
+//  纸光 · PAPERLIGHT   光影纸雕灯箱 · 立体书开场 · 视差推镜 · 动态排版
+//  20 s 样片：0–1.6 立体书展开 · 0.9–4.6 钩子 · 4–12 各闪各的 + 批注 · 12–16.5 同步、整箱呼吸 · 16.5–20 收尾
+// ======================================================================
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const expo = u => { u = clamp(u, 0, 1); return u === 1 ? 1 : 1 - Math.pow(2, -10 * u); };
+const back = u => { u = clamp(u, 0, 1); const c1 = 1.2, c3 = c1 + 1; return 1 + c3 * Math.pow(u - 1, 3) + c1 * Math.pow(u - 1, 2); };
+const EVENTS = []; window.EVENTS = EVENTS;
+const DUR = 20;
+
+// ---------- 色 ----------
+const CREAM = '#f5e8d3', AMBER = '#ffb650', AMBER2 = '#ff8f3a';
+const PAPER = ['#4b4270', '#393361', '#2b2a4e', '#1f1f3d', '#15152c', '#0c0c1c']; // 远 → 近
+const EDGE = ['#7a6ea0', '#605b8f', '#4d4c7c', '#3a3a66', '#2a2a4f', '#1c1c36'];
+
+// ---------- 几何 ----------
+reseed(7);
+function ridge(y0, amp, freq, n = 80, seed = 1) { // 纸山轮廓
+  const pts = []; for (let i = 0; i <= n; i++) { const x = -200 + i / n * (W + 400); const y = y0 + Math.sin(x * freq + seed) * amp + Math.sin(x * freq * 2.7 + seed * 2) * amp * 0.35 + Math.sin(x * freq * 6.1 + seed * 3) * amp * 0.12; pts.push([x, y]); } return pts;
+}
+const farHills = ridge(1130, 70, 0.0032, 80, 1), midHills = ridge(1230, 48, 0.0048, 80, 4);
+// 红树：剪纸轮廓（树干 + 树冠团块）
+const TREE = { x: 470, base: 1335 };
+const branches = [], blobs = [];
+function grow(x, y, ang, len, w, d) {
+  const x2 = x + Math.cos(ang) * len, y2 = y + Math.sin(ang) * len; branches.push({ x, y, x2, y2, w });
+  if (d <= 0) { for (let k = 0; k < 7; k++) blobs.push({ x: x2 + (rnd() - 0.5) * 100, y: y2 + (rnd() - 0.6) * 70, r: 22 + rnd() * 32 }); return; }
+  const n = d > 4 ? 2 : (rnd() < 0.5 ? 2 : 3);
+  for (let i = 0; i < n; i++) { const a = ang + (i - (n - 1) / 2) * 0.62 + (rnd() - 0.5) * 0.5; grow(x2, y2, a, len * (0.68 + rnd() * 0.14), w * 0.66, d - 1); }
+}
+grow(TREE.x, TREE.base, -Math.PI / 2 + 0.05, 160, 28, 6);
+const roots = []; for (let i = 0; i < 9; i++) { const a = i / 8 - 0.5; roots.push({ sx: TREE.x + a * 24, sy: 1215 + rnd() * 50, cx: TREE.x + a * 180, cy: 1260 + rnd() * 60, ex: TREE.x + a * 330 + (rnd() - 0.5) * 30, ey: TREE.base + 6, w: 4 + rnd() * 4 }); }
+const STARS = []; for (let i = 0; i < 70; i++) STARS.push({ x: rnd() * W, y: 80 + rnd() * 880, r: 0.8 + rnd() * 1.6, s: 0.6 + rnd() * 1.5, p: rnd() * TAU, a: 0.5 + rnd() * 0.5 });
+const reeds = []; for (let i = 0; i < 46; i++) { const x = -40 + rnd() * (W + 80); reeds.push({ x, h: 120 + rnd() * 260, lean: (rnd() - 0.5) * 0.25, w: 5 + rnd() * 6, head: rnd() < 0.5 }); }
+// 萤火虫：树冠团块里
+const flyPts = []; for (let i = 0; i < 150; i++) { const b = blobs[Math.floor(rnd() * blobs.length)]; const a = rnd() * TAU, rr = Math.sqrt(rnd()) * b.r * 1.3; flyPts.push([b.x + Math.cos(a) * rr, b.y + Math.sin(a) * rr]); }
+const S = makeSwarm(flyPts, 7); S.forEach(s => { s.sz = 0.8 + rnd() * 0.5; s.tw = rnd() * TAU; });
+let FOCUS = 0; { let bd = 1e9; S.forEach((s, i) => { const d = Math.hypot(s.x - 560, s.y - 820); if (d < bd) { bd = d; FOCUS = i; } }); }
+const K = t => t < 11.2 ? 0 : 0.5 * sm((t - 11.2) / 2.6);
+
+// ---------- 纹理 ----------
+const fiber = noiseCanvas(360, 640, 255);
+const SPR = (() => { const c = document.createElement('canvas'); c.width = c.height = 128; const g = c.getContext('2d'); const gr = g.createRadialGradient(64, 64, 0, 64, 64, 64); gr.addColorStop(0, 'rgba(255,250,220,1)'); gr.addColorStop(0.12, 'rgba(255,236,160,0.9)'); gr.addColorStop(0.4, 'rgba(255,190,90,0.28)'); gr.addColorStop(1, 'rgba(255,160,70,0)'); g.fillStyle = gr; g.fillRect(0, 0, 128, 128); return c; })();
+const glowC = document.createElement('canvas'); glowC.width = 270; glowC.height = 480; const glowX = glowC.getContext('2d');
+
+// ---------- 纸：带厚度边和投影 ----------
+function paper(g, pathFn, fill, edge, shadow = 0.5, blur = 26, dy = 16) {
+  g.save(); g.shadowColor = `rgba(0,0,0,${shadow})`; g.shadowBlur = blur; g.shadowOffsetY = dy; pathFn(g); g.fillStyle = fill; g.fill(); g.restore();
+  g.save(); pathFn(g); g.clip(); g.translate(0, 3); pathFn(g); g.fillStyle = fill; g.fill(); g.restore();           // 本体
+  g.save(); pathFn(g); g.clip(); g.fillStyle = edge; g.translate(0, -3); pathFn(g); g.globalCompositeOperation = 'source-over'; g.fill(); g.restore(); // 顶边受光
+  g.save(); pathFn(g); g.clip(); g.translate(0, 4); pathFn(g); g.fillStyle = fill; g.fill(); g.restore();
+  g.save(); pathFn(g); g.clip(); g.globalCompositeOperation = 'overlay'; g.globalAlpha = 0.08; g.drawImage(fiber, 0, 0, W, H); g.restore();           // 纸纤维
+}
+const ridgePath = pts => g => { g.beginPath(); g.moveTo(pts[0][0], H + 400); pts.forEach(p => g.lineTo(p[0], p[1])); g.lineTo(pts[pts.length - 1][0], H + 400); g.closePath(); };
+const treePath = g => {
+  g.beginPath();
+  for (const b of branches) { const dx = b.x2 - b.x, dy = b.y2 - b.y, L = Math.hypot(dx, dy) || 1, nx = -dy / L * b.w / 2, ny = dx / L * b.w / 2, nx2 = -dy / L * b.w * 0.33, ny2 = dx / L * b.w * 0.33; g.moveTo(b.x + nx, b.y + ny); g.lineTo(b.x2 + nx2, b.y2 + ny2); g.lineTo(b.x2 - nx2, b.y2 - ny2); g.lineTo(b.x - nx, b.y - ny); g.closePath(); }
+  for (const b of blobs) { g.moveTo(b.x + b.r, b.y); g.arc(b.x, b.y, b.r, 0, TAU); }
+  for (const r of roots) { g.moveTo(r.sx - r.w, r.sy); g.quadraticCurveTo(r.cx - r.w, r.cy, r.ex - r.w, r.ey); g.lineTo(r.ex + r.w, r.ey); g.quadraticCurveTo(r.cx + r.w, r.cy, r.sx + r.w, r.sy); g.closePath(); }
+  // 树下岸
+  g.moveTo(-100, TREE.base - 4); g.quadraticCurveTo(300, TREE.base - 40, TREE.x, TREE.base - 20); g.quadraticCurveTo(800, TREE.base - 42, W + 100, TREE.base + 10); g.lineTo(W + 100, H + 400); g.lineTo(-100, H + 400); g.closePath();
+};
+const reedPath = g => {
+  g.beginPath(); g.moveTo(-100, 1600); g.quadraticCurveTo(300, 1560, 600, 1590); g.quadraticCurveTo(900, 1620, W + 100, 1575); g.lineTo(W + 100, H + 400); g.lineTo(-100, H + 400); g.closePath();
+  for (const r of reeds) { const tx = r.x + Math.sin(r.lean) * r.h, ty = 1590 - r.h; g.moveTo(r.x - r.w, 1600); g.quadraticCurveTo(r.x + (tx - r.x) * 0.4 - r.w * 0.5, 1600 - r.h * 0.55, tx, ty); g.quadraticCurveTo(r.x + (tx - r.x) * 0.4 + r.w * 0.5, 1600 - r.h * 0.55, r.x + r.w, 1600); g.closePath(); if (r.head) { g.moveTo(tx + 7, ty); g.ellipse(tx, ty + 6, 7, 26, Math.sin(r.lean) * 0.6, 0, TAU); } }
+};
+const framePath = g => { g.beginPath(); const r = [[0, 0, 200, 150], [W, 0, 220, 130], [0, H, 170, 150], [W, H, 210, 140]]; for (const [x, y, a, b] of r) { g.moveTo(x + a, y); g.ellipse(x, y, a, b, 0, 0, TAU); } };
+
+// ---------- 镜头 ----------
+function cam(t) { // 推进：缓慢
+  const u = ease(clamp((t - 1.2) / 15, 0, 1)); return { zoom: lerp(1.0, 1.14, u), x: lerp(0, 36, u), y: lerp(0, -30, u) };
+}
+function layerXform(g, c, p, unfold) { // p: 视差系数 0 远 → 1 近；unfold: 立体书展开进度
+  const z = 1 + (c.zoom - 1) * (0.35 + p * 0.9);
+  const u = expo(unfold); const drop = (1 - u) * (260 + p * 260), tilt = (1 - u) * 0.18;
+  g.translate(540 + c.x * (p - 0.4) * 1.6, 1250 + c.y * (p - 0.4) * 1.6 + drop);
+  g.scale(z, z * (1 - tilt)); g.translate(-540, -1250);
+}
+const UNFOLD = [0.0, 0.14, 0.26, 0.4, 0.55, 0.72]; // 各层展开起始时刻（秒）
+const unfoldAt = (t, i) => clamp((t - UNFOLD[i] - 0.15) / 0.95, 0, 1);
+
+// ---------- 动态排版 ----------
+function kinetic(g, parts, x, y, t, t0, t1, { font, size, color = CREAM, accent = AMBER, stagger = 0.04, lineGap = 0 }) {
+  // 逐字起落；t1 为退出开始
+  const chars = []; for (const p of parts) for (const ch of p[0]) chars.push([ch, p[1]]);
+  g.save(); g.font = font; g.textBaseline = 'alphabetic'; g.textAlign = 'left';
+  let cx = x; const out = clamp((t - t1) / 0.4, 0, 1);
+  chars.forEach((c, i) => {
+    const u = expo(clamp((t - t0 - i * stagger) / 0.6, 0, 1)); const a = u * (1 - out);
+    if (a > 0) { g.globalAlpha = a; g.fillStyle = c[1] ? accent : color; g.fillText(c[0], cx, y + (1 - u) * size * 0.45 - out * size * 0.25); }
+    cx += g.measureText(c[0]).width;
+  });
+  g.restore(); return cx;
+}
+function label(g, text, x, y, t, t0, t1, size = 24, color = 'rgba(245,232,211,0.78)') {
+  const a = clamp((t - t0) / 0.5, 0, 1) * (1 - clamp((t - t1) / 0.4, 0, 1)); if (a <= 0) return;
+  g.save(); g.globalAlpha = a; g.fillStyle = color; g.font = `500 ${size}px "DejaVu Sans"`; g.textAlign = 'left'; g.textBaseline = 'middle';
+  let cx = x; for (const ch of text) { g.fillText(ch, cx, y); cx += g.measureText(ch).width + size * 0.22; }
+  g.restore();
+}
+function hairline(g, x0, x1, y, t, t0, t1, color = 'rgba(245,232,211,0.5)') {
+  const u = expo(clamp((t - t0) / 0.8, 0, 1)) * (1 - clamp((t - t1) / 0.4, 0, 1)); if (u <= 0) return;
+  g.save(); g.strokeStyle = color; g.lineWidth = 1.5; g.beginPath(); g.moveTo(x0, y); g.lineTo(x0 + (x1 - x0) * u, y); g.stroke(); g.restore();
+}
+
+// ---------- 主循环 ----------
+let frame = 0, lastSync = -9, breath = 0;
+window.renderFrame = function () {
+  const t = frame * DT; const g = ctx;
+  S.step(K(t)); S.forEach(s => { s.fl2 = Math.max(s.flash || 0, (s.fl2 || 0) * 0.9); });
+  const synced = S.R > 0.85 && t > 12;
+  const mean = S.reduce((a, s) => a + (s.fl2 || 0), 0) / S.length;
+  if (synced && mean > 0.45 && t - lastSync > 0.6) { EVENTS.push({ type: 'sync', t: +t.toFixed(3) }); lastSync = t; }
+  breath = synced ? mean : breath * 0.9;
+  const c = cam(t);
+  g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 1; g.globalCompositeOperation = 'source-over';
+  // 0 · 背光（最深处的暖光）
+  const bl = clamp(t / 1.2, 0, 1);
+  g.fillStyle = '#0b0a18'; g.fillRect(0, 0, W, H);
+  const warm = 0.75 * bl + breath * 0.55 + (t > 16.5 ? -0.12 : 0);
+  const bg = g.createRadialGradient(560, 1210 + c.y * 0.3, 20, 560, 1210, 1150); bg.addColorStop(0, `rgba(255,186,96,${clamp(warm, 0, 1)})`); bg.addColorStop(0.25, `rgba(214,110,70,${clamp(warm * 0.7, 0, 1)})`); bg.addColorStop(0.55, `rgba(92,52,94,${clamp(warm * 0.55, 0, 1)})`); bg.addColorStop(1, 'rgba(16,14,34,0)');
+  g.fillStyle = bg; g.fillRect(0, 0, W, H);
+  // 月：一枚透光的纸孔
+  { g.save(); layerXform(g, c, 0.05, unfoldAt(t, 0)); const mx = 880, my = 330; const mg = g.createRadialGradient(mx, my, 60, mx, my, 260); mg.addColorStop(0, `rgba(255,224,170,${0.35 * bl})`); mg.addColorStop(1, 'rgba(255,224,170,0)'); g.fillStyle = mg; g.fillRect(mx - 300, my - 300, 600, 600); g.fillStyle = `rgba(246,228,190,${0.95 * bl})`; g.beginPath(); g.arc(mx, my, 64, 0, TAU); g.fill(); g.fillStyle = 'rgba(80,60,90,0.18)'; g.beginPath(); g.arc(mx - 20, my + 10, 17, 0, TAU); g.arc(mx + 24, my - 22, 11, 0, TAU); g.fill(); g.restore(); }
+  // 星：纸上的针孔
+  { g.save(); layerXform(g, c, 0.02, unfoldAt(t, 0)); for (const st of STARS) { const tw = 0.5 + 0.5 * Math.sin(t * st.s + st.p); g.globalAlpha = bl * (0.25 + 0.55 * tw) * st.a; g.fillStyle = '#f6e4be'; g.beginPath(); g.arc(st.x, st.y, st.r, 0, TAU); g.fill(); } g.restore(); }
+  // 1 · 远山  2 · 中山
+  g.save(); layerXform(g, c, 0.12, unfoldAt(t, 1)); paper(g, ridgePath(farHills), PAPER[0], EDGE[0], 0.45, 30, 18); g.restore();
+  g.save(); layerXform(g, c, 0.24, unfoldAt(t, 2)); paper(g, ridgePath(midHills), PAPER[1], EDGE[1], 0.5, 30, 18); g.restore();
+  // 雾：半透明硫酸纸
+  { g.save(); layerXform(g, c, 0.3, unfoldAt(t, 2)); const fg = g.createLinearGradient(0, 1180, 0, 1330); fg.addColorStop(0, 'rgba(255,200,140,0)'); fg.addColorStop(0.5, `rgba(255,200,140,${0.16 + breath * 0.2})`); fg.addColorStop(1, 'rgba(255,200,140,0)'); g.fillStyle = fg; g.fillRect(-200, 1180, W + 400, 150); g.restore(); }
+  // 3 · 湖面：纸上割出的细缝反光
+  { g.save(); layerXform(g, c, 0.36, unfoldAt(t, 3)); paper(g, g2 => { g2.beginPath(); g2.rect(-200, 1300, W + 400, 1000); }, PAPER[2], EDGE[2], 0.4, 24, 12);
+    g.globalCompositeOperation = 'lighter'; for (let i = 0; i < 26; i++) { const y = 1318 + i * 9 + (i % 3) * 2; const len = 60 + Math.sin(i * 1.3 + t * 0.6) * 40 + (i % 5) * 30; const x = 540 + Math.sin(i * 2.1 + t * 0.25) * 170 - len / 2; g.globalAlpha = (0.18 + breath * 0.5) * (1 - i / 30); g.fillStyle = '#ffcf8a'; g.fillRect(x, y, len, 2.2); } g.restore(); }
+  // 4 · 红树 + 萤火虫
+  { g.save(); layerXform(g, c, 0.5, unfoldAt(t, 4));
+    paper(g, treePath, PAPER[3], EDGE[3], 0.55, 28, 16);
+    // 树冠边缘受萤火虫照亮
+    if (breath > 0.05) { g.save(); treePath(g); g.clip(); g.globalCompositeOperation = 'lighter'; const lg = g.createRadialGradient(560, 820, 40, 560, 820, 520); lg.addColorStop(0, `rgba(255,190,90,${0.28 * breath})`); lg.addColorStop(1, 'rgba(255,190,90,0)'); g.fillStyle = lg; g.fillRect(0, 300, W, 1100); g.restore(); }
+    const show = sm((t - 3.6) / 1.2);
+    g.save(); g.globalCompositeOperation = 'lighter';
+    S.forEach((s, i) => { const f = (s.fl2 || 0); const b = 0.07 + f; const sz = (10 + f * 46) * s.sz; g.globalAlpha = Math.min(1, b) * show; g.drawImage(SPR, s.x - sz / 2 + Math.sin(t * 0.8 + s.tw) * 2, s.y - sz / 2 + Math.cos(t * 0.7 + s.tw) * 2, sz, sz); });
+    g.restore();
+    // 批注：焦点萤火虫、六七个邻居
+    const na = win(t, 8.3, 12.6, 0.5); if (na > 0) {
+      const fo = S[FOCUS]; g.save(); g.globalAlpha = na; g.strokeStyle = CREAM; g.lineWidth = 1.4; g.setLineDash([3, 7]); g.lineCap = 'round';
+      for (const j of fo.nb) { const o = S[j]; const u = expo(clamp((t - 8.5 - j % 5 * 0.08) / 0.7, 0, 1)); g.beginPath(); g.moveTo(fo.x, fo.y); g.lineTo(fo.x + (o.x - fo.x) * u, fo.y + (o.y - fo.y) * u); g.stroke(); }
+      g.setLineDash([]); g.lineWidth = 2; const ru = expo(clamp((t - 8.3) / 0.6, 0, 1)); g.beginPath(); g.arc(fo.x, fo.y, 30, -Math.PI / 2, -Math.PI / 2 + TAU * ru); g.stroke();
+      for (const j of fo.nb) { const o = S[j]; g.beginPath(); g.arc(o.x, o.y, 9, 0, TAU); g.stroke(); }
+      g.restore();
+    }
+    g.restore(); }
+  // 5 · 近岸芦苇
+  g.save(); layerXform(g, c, 0.78, unfoldAt(t, 5)); paper(g, reedPath, PAPER[4], EDGE[4], 0.6, 34, 20); g.restore();
+  // 6 · 前景纸框（暗角用纸做）
+  g.save(); layerXform(g, c, 0.95, 1); g.fillStyle = PAPER[5]; framePath(g); g.fill(); g.restore();
+  // 全局：光晕 pass（萤火虫与月）
+  glowX.setTransform(1, 0, 0, 1, 0, 0); glowX.clearRect(0, 0, 270, 480); glowX.globalCompositeOperation = 'lighter';
+  { glowX.save(); glowX.scale(0.25, 0.25); layerXform(glowX, c, 0.5, unfoldAt(t, 4)); const show = sm((t - 3.6) / 1.2); S.forEach(s => { const f = s.fl2 || 0; if (f < 0.25) return; const sz = 110 * f; glowX.globalAlpha = f * 0.55 * show; glowX.drawImage(SPR, s.x - sz / 2, s.y - sz / 2, sz, sz); }); glowX.restore(); }
+  g.save(); g.globalCompositeOperation = 'lighter'; g.filter = 'blur(14px)'; g.globalAlpha = 0.85; g.drawImage(glowC, 0, 0, W, H); g.restore();
+
+  // ---------- 文字 ----------
+  const DISP = '700 64px "Noto Serif CJK SC"', BODY = '400 42px "Noto Serif CJK SC"';
+  // 页眉
+  label(g, 'NO. 01', 120, 150, t, 0.9, 19.3, 22); hairline(g, 120, 480, 184, t, 1.0, 19.3); label(g, 'SYNCHRONOUS FIREFLIES', 120, 214, t, 1.1, 19.3, 20, 'rgba(245,232,211,0.55)');
+  g.save(); g.globalAlpha = clamp((t - 1.0) / 0.5, 0, 1) * (1 - clamp((t - 19.3) / 0.4, 0, 1)); g.fillStyle = 'rgba(245,232,211,0.78)'; g.font = '400 22px "Noto Serif CJK SC"'; g.textAlign = 'right'; g.textBaseline = 'middle'; g.fillText('现象 · 萤火虫同步', W - 120, 150); g.restore();
+  // 钩子（0.9–4.6）
+  kinetic(g, [['几千只萤火虫，']], 120, 420, t, 0.9, 4.4, { font: DISP, size: 64 });
+  kinetic(g, [['没人指挥，']], 120, 520, t, 1.25, 4.4, { font: DISP, size: 64 });
+  kinetic(g, [['凭什么能'], ['一起亮', 1], ['？']], 120, 620, t, 1.6, 4.4, { font: DISP, size: 64 });
+  { const u = expo(clamp((t - 2.5) / 0.8, 0, 1)) * (1 - clamp((t - 4.4) / 0.4, 0, 1)); if (u > 0) { g.save(); g.font = DISP; const x0 = 120 + g.measureText('凭什么能').width, w = g.measureText('一起亮').width; g.strokeStyle = AMBER; g.lineWidth = 4; g.lineCap = 'round'; g.beginPath(); g.moveTo(x0, 646); g.lineTo(x0 + w * u, 646); g.stroke(); g.restore(); } }
+  // 现象段标题（4.8–8）
+  kinetic(g, [['泰国河边，一棵树。']], 120, 440, t, 4.9, 8.0, { font: '500 50px "Noto Serif CJK SC"', size: 50 });
+  kinetic(g, [['一开始，各闪各的。']], 120, 520, t, 5.4, 8.0, { font: BODY, size: 42, color: 'rgba(245,232,211,0.85)' });
+  // 批注段（8.6–12.6）
+  kinetic(g, [['每只，只看身边最近的'], ['六七只', 1], ['。']], 120, 440, t, 8.7, 12.4, { font: '500 50px "Noto Serif CJK SC"', size: 50 });
+  kinetic(g, [['旁边亮了，就把自己的节奏，往前调一点点。']], 120, 520, t, 9.4, 12.4, { font: '400 36px "Noto Serif CJK SC"', size: 36, color: 'rgba(245,232,211,0.85)' });
+  // 同步段（13–16.3）
+  kinetic(g, [['就'], ['一点点', 1], ['。']], 120, 440, t, 13.0, 16.2, { font: DISP, size: 64 });
+  kinetic(g, [['几千个小光点，变成了同一个心跳。']], 120, 530, t, 13.6, 16.2, { font: BODY, size: 42, color: 'rgba(245,232,211,0.85)' });
+  // 收尾（16.6–20）
+  kinetic(g, [['想成为什么样的人，']], 120, 440, t, 16.7, 19.6, { font: DISP, size: 64 });
+  kinetic(g, [['先看看，你在'], ['跟谁一起闪', 1], ['。']], 120, 540, t, 17.1, 19.6, { font: DISP, size: 64 });
+  hairline(g, 120, 300, 600, t, 17.9, 19.6, AMBER);
+  // 颗粒
+  grain(g, frame, 0.045, 'overlay');
+  const fin = clamp(t / 0.6, 0, 1), fout = clamp((DUR - t) / 0.8, 0, 1); if (fin < 1 || fout < 1) { g.fillStyle = `rgba(0,0,0,${1 - Math.min(fin, fout)})`; g.fillRect(0, 0, W, H); }
+  frame++; return t;
+};
+window.seek = function (f) { frame = 0; for (let i = 0; i < f; i++) { S.step(K(i * DT)); frame++; } };
+window.TOTAL = Math.round(DUR * FPS);
+</script></body></html>

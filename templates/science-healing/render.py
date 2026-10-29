@@ -16,7 +16,7 @@ FPS = 30
 def open_page(pw, look):
     b = pw.chromium.launch(); p = b.new_page(viewport={'width': 1080, 'height': 1920})
     p.on('pageerror', lambda e: (print('PAGEERR', e), sys.exit(1)))
-    p.goto(f'file://{HERE}/template.html?look={look}')
+    p.goto(f'file://{HERE}/{look}.html' if look in ('paperlight',) else f'file://{HERE}/template.html?look={look}')
     p.evaluate('document.fonts.ready')
     return b, p
 
@@ -39,7 +39,8 @@ def video(look):
         ff = subprocess.Popen(['ffmpeg', '-loglevel', 'error', '-y', '-f', 'image2pipe', '-framerate', str(FPS), '-i', '-', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', str(out)], stdin=subprocess.PIPE)
         for i in range(n):
             p.evaluate('renderFrame()'); ff.stdin.write(p.locator('#c').screenshot(type='jpeg', quality=90))
-        ff.stdin.close(); ff.wait(); b.close()
+        ff.stdin.close(); ff.wait()
+        ev = p.evaluate('window.EVENTS || []'); (OUT / f'{look}-events.json').write_text(__import__('json').dumps(ev)); b.close()
     print('video ->', out, n, 'frames')
 
 if __name__ == '__main__':
