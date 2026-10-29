@@ -21,7 +21,7 @@
 - [x] NO.003 · C · Etsy 新店身份验证要准备什么（已发 2026-10-28，ep003，标题「Etsy开店验证反复失败，可能开不了店」；核实：Etsy 帮助中心 How to Verify Your Identity on Etsy、How to Verify Your Seller Information for Etsy Payments，2026-10-28 查阅，页面未标更新日期）
   - 钩子：「Etsy 开店卡在验证，多半是这几样没备好」
   - 核实：Etsy 帮助中心的卖家身份验证文章
-- [ ] NO.004 · A · 新手为什么卖「带名字的」定制品
+- [x] NO.004 · A · 新手为什么卖「带名字的」定制品（已发 2026-10-29，ep004，标题「Etsy新手卖定制，一个商品最多设5项」；核实：Etsy 帮助中心 How to Offer Personalized Listings，2026-10-29 查阅，页面未标更新日期；配音临时换成 edge-tts 晓晓，因 OpenRouter 余额用完）
   - 钩子：「Etsy 新手别卖标品，卖能刻名字的」
   - 核实：Etsy 帮助中心的个性化选项（personalization）怎么设
   - 我们的角度：我们的木名牌、刺绣都是按客户名字做的
