@@ -236,7 +236,7 @@
     };
   };
   T.chips = (s, g) => {
-    const top = s.top || TOP(s), ts = s.chips.map((_, i) => (s.on ? g.L[s.on[i]] + 0.25 : 0.45 + i * 0.14));
+    const top = s.top || TOP(s), ts = s.chips.map((_, i) => (s.on ? onT(g, s.on[i]) : 0.45 + i * 0.14));
     const tipT = (s.tips || []).map((_, i) => when({ on: s.tipsOn, at: s.tipsAt }, g, i, g.D * 0.6 + i * 0.3));
     return {
       html: `${head(s)}

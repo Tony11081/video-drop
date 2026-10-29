@@ -24,7 +24,7 @@
 - [x] EP.014 欧盟海关新规：11 月 1 日起 €2 处理费 + 商品编码（社区公告 Prepare for EU customs updates，插队新题，2026-10-28）
 
 ## 待做
-- [ ] （新增）美国海关邮政新规：2027-01-20 起 $2,500 以下国际邮政包裹走 ACE Entry Type 13，FDA/CPSC 类商品可能要补文件，Etsy 建议连 Zonos（社区公告 New US customs postal entry requirements for international sellers，2026-10 下旬）
+- [x] EP.016（10-29）美国海关邮政新规：2027-01-20 起 $2,500 以下国际邮政包裹走 ACE Entry Type 13，FDA/CPSC 类商品可能要补文件，Etsy 建议连 Zonos（社区公告 New US customs postal entry requirements for international sellers，2026-10 下旬）
 - [ ] 客服标准：纠纷率、按时发货、回复率达不到会怎样（帮助中心 customer service standards；关联星级卖家和购买保障）
 - [ ] 星级卖家（Star Seller）的几项指标和怎么保住（帮助中心 Star Seller）
 - [x] EP.015（10-28）标题新规：Etsy 建议怎么写标题、有什么工具（卖家手册 2026-04-27 New Guidance for Listing Titles）
