@@ -1,0 +1,23 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style>
+<script src="common.js"></script>
+<script src="looks.js"></script>
+</head>
+<body><canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+const q = new URLSearchParams(location.search);
+const LOOK = LOOKS[q.get('look') || 'notes']; LOOK.init();
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+let frame = 0;
+window.renderFrame = function () {
+  const t = frame * DT;
+  LOOK.swarm.step(DEMO.K(t));
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+  LOOK.draw(ctx, t, frame);
+  frame++; return t;
+};
+window.seek = function (f) { frame = 0; for (let i = 0; i < f; i++) { LOOK.swarm.step(DEMO.K(i * DT)); frame++; } };
+window.TOTAL = Math.round(DEMO.dur * FPS);
+</script></body></html>
