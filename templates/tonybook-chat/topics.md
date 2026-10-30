@@ -25,7 +25,7 @@
   - 钩子：「Etsy 新手别卖标品，卖能刻名字的」
   - 核实：Etsy 帮助中心的个性化选项（personalization）怎么设
   - 我们的角度：我们的木名牌、刺绣都是按客户名字做的
-- [ ] NO.005 · B · Etsy 站外广告，哪些店能关
+- [ ] NO.005 · B · Etsy 站外广告，哪些店能关（2026-10-30 ep005 已做好、未发出：手机锁屏，等 Tony 解锁或手动发；成片 https://edit.openaigrowth.com/files/2ee10f309db88104bb76836b718fa0e15113ef8bbcd357719acf179cf79c3ee0/234d57c11a0a.mp4 ，文案见 douyin-copy.md NO.005。下次出片任务先发这条，不要重做）
   - 钩子：「站外广告 15%，有的店可以直接关」
   - 核实：Etsy Offsite Ads 帮助文章（门槛、费率、上限）
 - [ ] NO.006 · A · 一个名字木牌，从出单到发货
