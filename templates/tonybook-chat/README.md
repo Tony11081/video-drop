@@ -41,4 +41,4 @@
 4. `render.py epNNN auto` 看联系表，修折行、溢出、空页。
 5. `render.py epNNN video` → `sfx.py epNNN` → ffmpeg 把 `sfx.wav` 合进 `picture.mp4` → 推到 `Tony11081/video-drop` 根目录 → `import_video`（raw.githubusercontent.com 的提交 SHA 链接）。
 6. `mux`：voiceover `{tts_id, at: timing.json 的 at}`，bgm `mixkit_dreaming_big.mp3` 音量 0.1、fade_in 0.5、fade_out 2，original_volume 0.8，loudnorm，**speed 1.3**。get_frames 抽帧检查。
-7. 手机发布：手机 Chrome 打开成片下载链接 → 抖音「拍摄」→「相册」→ 选视频 → 下一步 ×2 → 标题（≤20 字）+ 正文（话题最多 5 个）→ 封面选开头提问那一帧 → 「添加自主声明」选内容由 AI 生成 → 不加地点 → 发作品。
+7. 手机发布：手机 Chrome 打开成片下载链接 → 抖音「拍摄」→「相册」→ 选视频 → 下一步 ×2 → 标题（≤20 字）+ 正文（话题最多 5 个）→ 封面选开头提问那一帧 → 「添加自主声明」选内容由 AI 生成（2026-10-31：发布页第一次进去没有这一项，返回编辑页再点「下一步」才出现在「添加标签」下面）→ 不加地点 → 发作品。
