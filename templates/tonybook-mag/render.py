@@ -8,7 +8,8 @@ from playwright.sync_api import sync_playwright
 
 ROOT = pathlib.Path(__file__).parent.resolve()
 EP, MODE = sys.argv[1], sys.argv[2]
-URL = (ROOT / "template.html").as_uri() + "?ep=" + EP
+ALPHA = MODE == "overlay"
+URL = (ROOT / "template.html").as_uri() + "?ep=" + EP + ("&alpha=1" if ALPHA else "")
 OUT = ROOT / "out" / EP
 OUT.mkdir(parents=True, exist_ok=True)
 
@@ -54,6 +55,24 @@ def sheet(times):
         shots[0].save(OUT / "frame.png")
 
 
+def overlay(fps=30):
+    """footage episodes: transparent VP9 webm (graphics + captions) to lay over stock video on the edit server"""
+    with sync_playwright() as p:
+        b, pg = page_ctx(p)
+        d = write_timing(pg)
+        n = int(d["total"] * fps)
+        ff = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-y", "-f", "image2pipe", "-framerate", str(fps), "-c:v", "png", "-i", "-",
+                               "-c:v", "libvpx-vp9", "-pix_fmt", "yuva420p", "-b:v", "0", "-crf", "30", "-deadline", "good", "-cpu-used", "4",
+                               "-row-mt", "1", "-auto-alt-ref", "0", str(OUT / "overlay.webm")], stdin=subprocess.PIPE)
+        for f in range(n):
+            pg.evaluate(f"seek({f / fps})")
+            ff.stdin.write(pg.screenshot(type="png", omit_background=True))
+            if f % 300 == 0:
+                print(f"{EP} {f}/{n}", flush=True)
+        ff.stdin.close(); ff.wait(); b.close()
+    print(EP, "overlay done", round(d["total"], 2), flush=True)
+
+
 def video(fps=30):
     with sync_playwright() as p:
         b, pg = page_ctx(p)
@@ -81,5 +100,7 @@ if __name__ == "__main__":
             b, pg = page_ctx(p)
             sc = pg.evaluate("SCENES"); b.close()
         sheet([round(a + 0.85 * (e - a), 2) for a, e, _ in sc])
+    elif MODE == "overlay":
+        overlay()
     else:
         video()

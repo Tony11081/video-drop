@@ -1,35 +1,35 @@
-/* NO.005 · B · Etsy 站外广告，哪些店能关 — 4 号极简杂志样片（2026-10-31），tts 8875aff4bd7f（ElevenLabs v4 · will）
+/* NO.005 · B · Etsy 站外广告，哪些店能关 — 4 号极简杂志样片（2026-10-31），tts ff79967af7bb（ElevenLabs v4 · will · tts 内 1.3 倍）
    Facts only from Etsy Help Center "How Etsy's Offsite Ads Work" (help.etsy.com/hc/articles/360000338367), accessed 2026-10-30, page shows no last-updated date:
    15% for shops that have never made $10,000 in any consecutive 365 days, 12% for shops that have; fee never exceeds $100 per order;
    attributed when a buyer clicks an ad and buys within 30 days; only shops under the threshold can opt out
    (Shop Manager → Settings → Offsite Ads → Opt out), can turn it back on from the same page; once over the threshold, required from then on.
    The $100 order is an illustrative calculation (示意). */
 window.EP = {
-  speed: 1.3, lead: 0.1, tail: 2.2,
+  speed: 1, lead: 0.1, tail: 2.2, footage: true,   // 配音已在 tts 里 1.3 倍（ElevenLabs will），画面按成片时间轴，背景素材在服务器上合成
   episode: "005", date: "10.31",
   cover: "assets/ep005-cover.png",
   topic: "Etsy 站外广告扣 15%，能关吗？",
   source: "来源：Etsy 帮助中心 How Etsy's Offsite Ads Work（2026-10-30 查阅，页面未标更新日期）· 示意计算",
-  tts: { id: "8875aff4bd7f", voice: "elevenlabs/eleven-v4 · will", gap: 0.2 },
+  tts: { id: "ff79967af7bb", voice: "elevenlabs/eleven-v4 · will · speed 1.3", gap: 0.15 },
   voice: [
-    { dur: 4.801, cap: "站外广告的单要扣15%|小店可以直接关", keys: ["直接关"] },
-    { dur: 2.815, cap: "关键就看一个数|1万美元", keys: ["1万美元"] },
-    { dur: 5.569, cap: "任意连续365天|销售额从没到过1万美元，就能关", keys: ["从没到过"] },
-    { dur: 3.811, cap: "一旦到过1万|就得一直参加，再也关不掉", keys: ["再也关不掉"] },
-    { dur: 1.505, cap: "那钱是怎么扣的？", keys: ["怎么扣"] },
-    { dur: 3.96, cap: "没到过1万的店|广告带来的单扣15%", keys: ["15%"] },
-    { dur: 2.724, cap: "到过1万的店，扣12%", keys: ["12%"] },
-    { dur: 3.316, cap: "不管订单多大|每单最多扣100美元", keys: ["100美元"] },
-    { dur: 4.616, cap: "买家点了广告，30天内|在你店里下单，都算广告单", keys: ["30天内"] },
-    { dur: 3.394, cap: "比如一单100美元|就要扣15美元", keys: ["15美元"] },
-    { dur: 4.931, cap: "在哪关？店铺管理|设置，站外广告，点退出", keys: ["站外广告"] },
-    { dur: 3.312, cap: "关了以后想再开|同一页还能打开", keys: ["同一页"] },
-    { dur: 1.915, cap: "所以先做三件事", keys: ["三件事"] },
-    { dur: 2.947, cap: "第一，查清自己|有没有到过1万", keys: ["到过1万"] },
-    { dur: 4.066, cap: "第二，利润薄的店|先算广告单还赚不赚", keys: ["还赚不赚"] },
-    { dur: 3.825, cap: "第三，到1万之前想好|过了就关不掉", keys: ["关不掉"] },
-    { dur: 4.035, cap: "有店不知道上什么|可以来Etsy-Tony粉丝群找Tony", keys: ["Etsy-Tony粉丝群"] },
-    { dur: 5.04, cap: "我是Tony Book跨境的助理|关注我，每天讲透一个跨境问题", keys: ["关注我"] },
+    { dur: 3.78, cap: "站外广告的单要扣15%|小店可以直接关", keys: ["直接关"] },
+    { dur: 2.241, cap: "关键就看一个数|1万美元", keys: ["1万美元"] },
+    { dur: 4.168, cap: "任意连续365天|销售额从没到过1万美元，就能关", keys: ["从没到过"] },
+    { dur: 2.992, cap: "一旦到过1万|就得一直参加，再也关不掉", keys: ["再也关不掉"] },
+    { dur: 1.241, cap: "那钱是怎么扣的？", keys: ["怎么扣"] },
+    { dur: 3.129, cap: "没到过1万的店|广告带来的单扣15%", keys: ["15%"] },
+    { dur: 2.107, cap: "到过1万的店，扣12%", keys: ["12%"] },
+    { dur: 2.586, cap: "不管订单多大|每单最多扣100美元", keys: ["100美元"] },
+    { dur: 3.559, cap: "买家点了广告，30天内|在你店里下单，都算广告单", keys: ["30天内"] },
+    { dur: 2.672, cap: "比如一单100美元|就要扣15美元", keys: ["15美元"] },
+    { dur: 3.83, cap: "在哪关？店铺管理|设置，站外广告，点退出", keys: ["站外广告"] },
+    { dur: 2.652, cap: "关了以后想再开|同一页还能打开", keys: ["同一页"] },
+    { dur: 1.549, cap: "所以先做三件事", keys: ["三件事"] },
+    { dur: 2.298, cap: "第一，查清自己|有没有到过1万", keys: ["到过1万"] },
+    { dur: 3.791, cap: "第二，利润很薄的店|先算一算广告单还赚不赚钱", keys: ["还赚不赚"] },
+    { dur: 2.834, cap: "第三，到1万之前想好|过了就关不掉", keys: ["关不掉"] },
+    { dur: 3.22, cap: "有店不知道上什么|可以来Etsy-Tony粉丝群找Tony", keys: ["Etsy-Tony粉丝群"] },
+    { dur: 3.916, cap: "我是Tony Book跨境的助理|关注我，每天讲透一个跨境问题", keys: ["关注我"] },
   ],
   msgs: [
     { at: 0, instant: true, kind: "user", text: "站外广告扣 **15%**|能关吗？" },
