@@ -1,5 +1,7 @@
 # TonyBook 跨境实操 · 助理聊天模板（v1）
 
+> **2026-10-31 起停用**：TonyBook 改用 `templates/tonybook-mag`（4 号极简杂志 + 实拍素材 + ElevenLabs Will）。选题库和文案记录也搬到那边，这里不再更新。
+
 抖音号「助理－TonyBook跨境」专用。和 Shopwright · Policy Brief（暖白底、青柠色、Bo 男声）是两个号、两套风格，**不混用**。
 
 - 内容：跨境实操干货（Etsy / Shopify / 亚马逊），一条讲透一个问题，数字和规则只用官方原文。
