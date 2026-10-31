@@ -29,7 +29,7 @@
   const T = (x) => { const i = Math.min(V.length - 1, Math.floor(x)), f = x - i; return V[i].at + f * V[i].dur; };
 
   document.getElementById("epno").textContent = "NO." + E.episode + (E.date ? " · " + E.date : "");
-  if (E.footage && new URLSearchParams(location.search).get("alpha") === "1") document.body.classList.add("alpha");
+  if (E.footage && new URLSearchParams(location.search).get("alpha") === "1") { document.body.classList.add("alpha"); document.documentElement.style.background = "transparent"; }
   const coverEl = document.getElementById("cover");
   if (E.cover) coverEl.style.backgroundImage = `url(${E.cover})`;
   const kickEl = document.getElementById("kick"), topicEl = document.getElementById("topic");

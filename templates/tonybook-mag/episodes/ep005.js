@@ -7,7 +7,7 @@
 window.EP = {
   speed: 1, lead: 0.1, tail: 2.2, footage: true,   // 配音已在 tts 里 1.3 倍（ElevenLabs will），画面按成片时间轴，背景素材在服务器上合成
   episode: "005", date: "10.31",
-  cover: "assets/ep005-cover.png",
+  // cover: "assets/ep005-cover.png",  // Codex 封面图到了再打开
   topic: "Etsy 站外广告扣 15%，能关吗？",
   source: "来源：Etsy 帮助中心 How Etsy's Offsite Ads Work（2026-10-30 查阅，页面未标更新日期）· 示意计算",
   tts: { id: "ff79967af7bb", voice: "elevenlabs/eleven-v4 · will · speed 1.3", gap: 0.15 },
