@@ -29,7 +29,7 @@
 - [x] EP.018（10-31）星级卖家（Star Seller）的几项指标和怎么保住（帮助中心 What is the Star Seller badge / Why was my badge removed；OUR TAKE：徽章不加排名，当月度体检表）
 - [x] EP.015（10-28）标题新规：Etsy 建议怎么写标题、有什么工具（卖家手册 2026-04-27 New Guidance for Listing Titles）
 - [x] EP.019（11-01）评分怎么算：平均分改算全部评价、越新越重、每年减半（卖家手册 2026-03-10 We're Updating How Average Review Ratings Are Calculated；OUR TAKE：奖励长期口碑，老店占便宜、新店没缓冲）
-- [ ] 旺季发货截止日和延迟发货的后果（卖家手册节日指南 / 帮助中心 processing time）
+- [x] EP.020（11-02）旺季发货：发货日怎么算、晚标发货会怎样、每单可改一次发货日（帮助中心 How to Set Processing Times… and Ship By Dates + 卖家手册 8 Common Questions About Estimated Delivery Dates；OUR TAKE：旺季晚一天比慢一天更伤，别为快一天压处理时间）。承运商节日截止日那篇帮助文章没写年份，没用具体日期
 - [ ] Etsy 广告新控制项：Etsy Ads 怎么设预算和出价（卖家手册 2026-06-01 Get More Control Over How You Advertise）
 - [ ] 关税变化对跨境卖家的影响（卖家手册 2026-06-09 Navigating Evolving Global Tariff Policies）
 - [ ] 创意标准 Creativity Standards：哪些商品会被下架（帮助中心 Reasons a Listing May Be Removed Under Creativity Standards）
