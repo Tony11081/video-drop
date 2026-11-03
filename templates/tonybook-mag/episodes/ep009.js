@@ -1,7 +1,7 @@
 /* NO.009 · A · 单多了不发错货，靠一串 SKU（2026-11-03），tts 13d0b1cc12f8（ElevenLabs v4 · will · tts 内 1.3 倍）
    A 类：只讲我们自己定制店的 SKU 编法（topics.md NO.009：款式号-图案号-颜色-尺码，客户的名字不进 SKU）。
    不报成本、单量、颜色数；SKU 示例为示意，不是真实编号。不讲 Etsy 平台规则（Etsy-Tony EP.014 讲过欧盟海关用 SKU，这里不碰）。
-   成片 output TBD。素材（Pexels 免费商用）：TBD */
+   成片 output 1ad1bade1958（46.54 秒）。素材（Pexels 免费商用）：首页 7210955 贴标签纸箱｜CH.01 4973185 色卡｜CH.02 7362811 扫包裹｜CH.03 6781988 记事本写字｜CH.04 4292903 仓库扫码｜CH.05 32421244 桌边手写｜CH.06 7287517 小工作室打包。封面：Codex IMG-20261103-001 未出图，没用封面。 */
 window.EP = {
   speed: 1, lead: 0.1, tail: 2.2, footage: true,   // 配音已在 tts 里 1.3 倍（ElevenLabs will），画面按成片时间轴，背景素材在服务器上合成
   episode: "009", date: "11.03",
