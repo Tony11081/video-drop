@@ -237,6 +237,8 @@ Etsy 帮助中心写着：第一张主图长和宽都不到 635 像素，在搜�
 先做 3 件事：长宽做到 2000 像素、横图或方图四周留边、缩小了也能一眼看懂。
 以 Etsy 帮助中心 Requirements and Best Practices for Images in Your Etsy Shop 为准（2026-11-04 查阅）。
 
+（已发 2026-11-04 18:19 北京时间，成片 49 秒，封面第一帧，声明「内容由AI生成」）
+
 有店不知道上什么，可以来 Etsy-Tony 粉丝群找 Tony。
 
 #Etsy #Etsy开店 #产品图 #跨境电商 #跨境电商运营
