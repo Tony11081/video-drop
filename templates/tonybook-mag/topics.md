@@ -58,7 +58,7 @@
 - [ ] NO.011 · B · Etsy 的钱多久到账、为什么被压款 —— 跳过：和 Etsy-Tony 政策速递 EP.007 财务页重复
   - 钩子：「Etsy 的钱没到账，先看是不是被压了」
   - 核实：Etsy Payments 存款周期、payment reserve 帮助文章
-- [ ] NO.012 · A · Etsy 主图第一张怎么做
+- [x] NO.012 · A · Etsy 主图第一张怎么做（做成 ep010，2026-11-04，标题「Etsy主图不到635像素，搜索往后排」；核实：Etsy 帮助中心 Requirements and Best Practices for Images in Your Etsy Shop，2026-11-04 查阅，页面未标更新日期；避开了 Etsy-Tony EP.005 讲过的「10 张图 / 视频」转化数字）
   - 钩子：「人家点不点进来，就看第一张图」
   - 核实：Etsy 照片要求（尺寸、张数、视频）
   - 我们的角度：我们自己给卖家做整套产品图

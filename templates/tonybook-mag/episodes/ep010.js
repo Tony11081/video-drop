@@ -1,7 +1,8 @@
 /* NO.012 · A · Etsy 主图第一张怎么做（2026-11-04），tts 8e161819d4b2（ElevenLabs v4 · will · tts 内 1.3 倍）
    A 类：官方要求只用 Etsy 帮助中心 Requirements and Best Practices for Images in Your Etsy Shop 原文（2026-11-04 查阅，页面未标更新日期）：
    首图长宽至少 635 像素否则搜索靠后；建议长宽 2000 像素以上；首图横图或方图；留边可裁成方/竖/横缩略图；超过 1MB 可能传不完；不支持透明 PNG。
-   拍法是我们自己给卖家做产品图的方法，不报成本和数据。没用 Etsy-Tony EP.005 讲过的「10 张图 / 视频」转化数字。 */
+   拍法是我们自己给卖家做产品图的方法，不报成本和数据。没用 Etsy-Tony EP.005 讲过的「10 张图 / 视频」转化数字。
+   成片 output a4d8ee6e9cf0（49.29 秒）。素材（Pexels 免费商用）：首页 7614397 静物｜CH.01 7600545 电脑修图｜CH.02 7610993 修图裁图｜CH.03 7680119 0–9.3s 拍产品｜CH.04 7680119 13–23s｜CH.05 5217304 木工。封面：Codex IMG-20261104-001 未出图，没用封面。 */
 window.EP = {
   speed: 1, lead: 0.1, tail: 2.2, footage: true,
   episode: "010", date: "11.04",
