@@ -31,7 +31,12 @@
 - [x] EP.019（11-01）评分怎么算：平均分改算全部评价、越新越重、每年减半（卖家手册 2026-03-10 We're Updating How Average Review Ratings Are Calculated；OUR TAKE：奖励长期口碑，老店占便宜、新店没缓冲）
 - [x] EP.020（11-02）旺季发货：发货日怎么算、晚标发货会怎样、每单可改一次发货日（帮助中心 How to Set Processing Times… and Ship By Dates + 卖家手册 8 Common Questions About Estimated Delivery Dates；OUR TAKE：旺季晚一天比慢一天更伤，别为快一天压处理时间）。承运商节日截止日那篇帮助文章没写年份，没用具体日期
 - [x] EP.021（11-03）Etsy 广告单品策略：日预算 ≥ $25 才能给每个商品单独设目标，三种策略（社区公告 New in Etsy Ads: set a strategy for each listing + 卖家手册 2026-06-01 Getting Started With Etsy Ads；OUR TAKE：功能给大卖家、也在鼓励多花钱，不到 $25 别为解锁加预算，控制权在选品）。近 7 天官方公告（EU 海关、Share & Save、美国海关、Cyber Sale）都已做过
-- [ ] 关税变化对跨境卖家的影响（卖家手册 2026-06-09 Navigating Evolving Global Tariff Policies）
+- [x] EP.022（11-04）关税与 DDP：7 月 9 日起发美国必须 DDP 才有购买保障，小额免税已取消，美国单独定价 + 关税估算器（卖家手册 2026-06-09 Navigating Evolving Global Tariff Policies + 社区公告 UPDATED SEP 9；OUR TAKE：关税是定价问题不是物流问题，只调美国价格，别赌到付）。近 7 天官方公告都已做过
 - [ ] 创意标准 Creativity Standards：哪些商品会被下架（帮助中心 Reasons a Listing May Be Removed Under Creativity Standards）
 - [ ] 保证金 / 付款冻结（Payment reserve）是什么、怎么解除（帮助中心）
 - [ ] 账户安全：两步验证、被盗号的风险和处理（帮助中心）
+- [ ] 新增：定制选项 Custom options（原 personalization）可以对定制文字收费、跨商品复用、批量改（卖家手册 2026-09-28 Newly Crafted: How We're Investing in Seller Success）
+- [ ] 新增：数字商品转实物打印测试——买家可把数字商品印成实物，第三方代工，符合条件的卖家自动加入、可随时退出（同上）
+- [ ] 新增：搜索结果新增卖家信息预览 + 「Ships from」地区筛选，中国发货的店会被怎么看（同上）
+- [ ] 新增：Marketplace Insights 搜索词推荐 + AI 数据助手（测试中，同上）
+- [ ] 新增：定制订单改进（社区公告 Updated 7/30: Improvements for custom orders）
