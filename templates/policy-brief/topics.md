@@ -41,7 +41,7 @@
 - [x] EP.022（11-04）关税与 DDP：7 月 9 日起发美国必须 DDP 才有购买保障，小额免税已取消，美国单独定价 + 关税估算器（卖家手册 2026-06-09 Navigating Evolving Global Tariff Policies + 社区公告 UPDATED SEP 9；OUR TAKE：关税是定价问题不是物流问题，只调美国价格，别赌到付）。近 7 天官方公告都已做过
 - [x] EP.023（11-05）创意标准 Creativity Standards：四类占一类、代工要标生产伙伴和真实发货地、AI 要写进描述、转卖空白品/贴贴纸/不满 20 年量产品不算、下架不退上架费（etsy.com/legal/creativity 2025-06-10 + 帮助中心 Why Was My Listing Removed by Etsy?；OUR TAKE：查的不是工厂是说谎，中国卖家走「你设计的 + 标生产伙伴」，别硬挂手工）。近 7 天官方公告都已做过
 - [x] EP.024（11-06）付款保证金 Payment account reserve：每笔实物订单先扣一部分、多数 90 天内解除、触发原因、加单号在途即放款、客服不能解除、星级卖家不会被设（帮助中心 What is a Payment Account Reserve? + 卖家手册 How We Use Payment Account Reserve to Keep Etsy Safe；OUR TAKE：不是罚款是押金，解冻键在物流数据不在客服）。近 7 天官方公告：EU 海关、Share & Save、美国海关已做；「Important updates to AI on Etsy」（约 11-03 社区帖）与 EP.001 AI 新规同一批，未重做
-- [ ] 账户安全：两步验证、被盗号的风险和处理（帮助中心）—— 进行中 · 11-06 · 政策速递 EP.025
+- [x] EP.025（11-06）账户安全：两步验证、密码 ≥8 位不重复、Etsy 不让你直接回复账户信息（必附 Etsy.com 链接）、催促语气=诈骗、注册邮箱必须登得上（社区官方公告 Tips for keeping your Etsy account protected；help.etsy.com 115015569567 和卖家手册清单 1087958808206 本次没读到；OUR TAKE：店铺的钥匙是注册邮箱和验证手机，不是密码，别挂在员工/代运营名下）
 - [ ] 新增：定制选项 Custom options（原 personalization）可以对定制文字收费、跨商品复用、批量改（卖家手册 2026-09-28 Newly Crafted: How We're Investing in Seller Success）
 - [ ] 新增：数字商品转实物打印测试——买家可把数字商品印成实物，第三方代工，符合条件的卖家自动加入、可随时退出（同上）
 - [ ] 新增：搜索结果新增卖家信息预览 + 「Ships from」地区筛选，中国发货的店会被怎么看（同上）
