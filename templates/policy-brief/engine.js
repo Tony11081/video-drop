@@ -300,13 +300,10 @@
       html: `
       ${vid ? vframe(72, 316, 936, fh) : photo(s.img, `left:72px;top:316px;width:936px;height:${fh}px`, "reveal@0")}
       ${vid ? "" : `<div class="abs status" style="left:100px;top:344px;background:rgba(255,255,255,.78);backdrop-filter:blur(12px)" data-a="up@0.3"><span class="pulse"></span>${esc(s.kicker)}</div>`}
-      <div class="abs" style="left:64px;top:${wt}px;font-weight:700;font-size:150px;line-height:1.05;letter-spacing:-.05em">${lines([s.word], "", 0.08)}</div>
-      <div class="abs lede" style="left:72px;top:${wt + 168}px;font-size:44px;color:var(--text);font-weight:600"><span class="ln"><span data-a="rise@0.25">${vid ? `<span class="mono" style="font-size:22px;color:var(--signal-ink);margin-right:14px">${esc(s.kicker)}</span>` : ""}${esc(s.title.join(""))}</span></span></div>
-      <div class="abs" style="left:72px;top:${wt + 250}px" data-a="pop@0.7"><span class="btn">${esc(s.url)} <span style="font-size:46px">→</span></span></div>
-      <div class="abs note" style="left:72px;top:${wt + 374}px" data-a="fade@1.1">${esc(s.note)}</div>`,
+      <div class="abs" style="left:64px;top:${wt}px;font-weight:700;font-size:118px;line-height:1.08;letter-spacing:-.04em">${lines(s.title, "", 0.08)}</div>
+      <div class="abs note" style="left:72px;top:${wt + 290}px;font-size:24px;opacity:.75" data-a="fade@1.1">${esc(s.word || "Shopwright")} · ${esc(s.url)}${s.note ? " · " + esc(s.note) : ""}</div>`,
       fx(r, u, D) {
         const im = $(r, ".photo .img"); if (im) im.style.setProperty("--kb", 1.12 - 0.12 * eo(P(u, 0, D)));
-        $(r, ".btn").style.setProperty("--bx", -120 + 240 * eio(P(u, 1.3, 1.1)) + "%");
       },
       cues: [[0.7, "ok"], [1.3, "scan"]],
     };
