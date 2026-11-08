@@ -49,7 +49,7 @@
 - [x] 定制订单改进（社区公告 Updated 7/30）——已并入 EP.026，不再单做
 - [ ] 最新（10-22）：卖家手册 Important updates to AI use on Etsy（article 1522733284810）+ etsy.com/news/creativity-and-trust-in-the-age-of-ai：实物商品至少一张未修改的实拍图、AI 只能调光线/尺寸/背景、教程食谱须本人写、举报新增「误导性 AI 图片」、旧商品有宽限期。先核对 EP.001 讲没讲过实拍图这条，没讲过就做「更新」
 
-- [ ] 进行中 · 11-08 · 政策速递 EP.027：感兴趣买家定向优惠（社区公告 New targeted offer for interested shoppers 183797，约 2026-08；近 7 天官方公告都已做过；help.etsy.com / 卖家手册本次读不了，数字商品打印测试和搜索新功能原文核实不了，暂不做）
+- [x] EP.027（11-08）感兴趣买家优惠 Interested shopper offer：新定向优惠自动给感兴趣买家发折扣、看浏览次数和最近有没有再看、平均触达是只用其他定向优惠的 2 倍（Etsy 内部数据 3.18–4.17）、不用全店促销、入口 Shop Manager › Sales and discounts、公告没写折扣比例和门槛（社区公告 New targeted offer for interested shoppers 183797，约 2026-08；OUR TAKE：折扣给犹豫的人不给所有人，定制小店最该用但不带新流量）。近 7 天官方公告都已做过；help.etsy.com / 卖家手册本次读不了，数字商品打印测试、搜索新功能原文核实不了，暂不做；EU 买家费用公告（184513）与 EP.014 重叠未做
 
 ## 知识讲解 · 已做 / 已占
 - [x] KP.000（11-06）样片：卖 20 美元 Etsy 拿走多少（上架费 $0.20、交易费 6.5% 含运费、美国支付手续费 3%+$0.25，合计约 11%），53 号收据拆账模板，可作为第一期发
