@@ -54,7 +54,7 @@ window.EP = {
       scene: { type: "checklist", kicker: "TODO · 今天", title: ["今天", "先做三件事"],
                items: ["核对店铺所在地", "别换店重开", "发货时效写进商品页"], at: [0.2, 0.45, 0.68] } },
     { dur: 8.445, cap: "底亮出来不怕，怕的是装|关注我，每天一条Etsy政策速递", keys: ["怕的是装"],
-      scene: { type: "cta", video: "6eb3b7bd7e08", from: 1, kicker: "OUR TAKE · Shopwright 观点", title: ["不怕亮底", "怕的是装"],
+      scene: { type: "cta", video: "6eb3b7bd7e08", from: 0.2, kicker: "OUR TAKE · Shopwright 观点", title: ["不怕亮底", "怕的是装"],
                word: "Shopwright", url: "openaigrowth.com", note: "观点仅供参考" } },
   ],
 };

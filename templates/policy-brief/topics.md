@@ -44,7 +44,12 @@
 - [x] EP.025（11-06）账户安全：两步验证、密码 ≥8 位不重复、Etsy 不让你直接回复账户信息（必附 Etsy.com 链接）、催促语气=诈骗、注册邮箱必须登得上（社区官方公告 Tips for keeping your Etsy account protected；help.etsy.com 115015569567 和卖家手册清单 1087958808206 本次没读到；OUR TAKE：店铺的钥匙是注册邮箱和验证手机，不是密码，别挂在员工/代运营名下）
 - [x] EP.026（11-07）定制选项 Custom options（原 personalization）：每个商品最多 5 个字段（文字/选项/上传文件）、定制文字可加价、跨商品复用、批量改、变体可用到 3 个（社区公告 Updated 7/30: Improvements for custom orders + Newly Crafted 188813；卖家手册 2026-09-28 那篇和帮助中心 360000344528 本次没读到；OUR TAKE：刻字别再白送，基础价按不刻字定、刻字单独加价）。近 7 天官方公告（EU 海关、Share & Save、美国海关）都已做过
 - [ ] 新增：数字商品转实物打印测试——买家可把数字商品印成实物，第三方代工，符合条件的卖家自动加入、可随时退出（同上）
-- [ ] 新增：搜索结果新增卖家信息预览 + 「Ships from」地区筛选，中国发货的店会被怎么看（同上） · 进行中 · 2026-11-09 · 政策速递 EP.028
+- [x] EP.028（11-09）搜索卖家预览 + Ships from 筛选：搜索结果预览显示名字、店铺名、开店时长、销量、店铺所在地；Ships from 国家/城市筛选；电脑端「Support makers near you」（etsy.com/news Newly Crafted Fall 2026，2026-09-28；社区 188813 帖没写这两项，help.etsy.com 10603291042967 本次读不了；OUR TAKE：不怕亮底怕装本地，拼开店时长和销量，老店别关了重开）。近 7 天官方公告都已做过
+- [ ] 新增（11-09）：快速上架表单 Quick list form（测试中）：按照片和描述建议标题、标签、属性（etsy.com/news Newly Crafted Fall 2026）
+- [ ] 新增（11-09）：Etsy 广告分组 Ad groups：一次把多个商品加进一组、按组看效果（同上）
+- [ ] 新增（11-09）：店铺统计提速 + 并排对比图（访问、订单、转化率、收入，逐步上线）（同上）
+- [ ] 新增（11-09）：下架申诉扩大——2026 年底前所有卖家在大多数政策类别都能申诉（同上；EP.012 的「更新」）
+- [ ] 新增（11-09）：欧盟包装 EPR 请愿进展（社区公告 An update on our EU packaging and EPR petition 189952；EP.006 的「更新」，先核对有没有新规则）
 - [ ] 新增：Marketplace Insights 搜索词推荐 + AI 数据助手（测试中，同上）
 - [x] 定制订单改进（社区公告 Updated 7/30）——已并入 EP.026，不再单做
 - [ ] 最新（10-22）：卖家手册 Important updates to AI use on Etsy（article 1522733284810）+ etsy.com/news/creativity-and-trust-in-the-age-of-ai：实物商品至少一张未修改的实拍图、AI 只能调光线/尺寸/背景、教程食谱须本人写、举报新增「误导性 AI 图片」、旧商品有宽限期。先核对 EP.001 讲没讲过实拍图这条，没讲过就做「更新」
