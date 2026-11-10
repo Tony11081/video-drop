@@ -56,6 +56,10 @@ def make(kind):
         th = tone(85, 0.4, 16, 0.22); th[: int(0.2 * SR)] += tone(170, 0.2, 30, 0.06)
         n = int(0.03 * SR); th[:n] += 0.08 * rng.standard_normal(n) * env(n, 200)
         return th
+    if kind == "hit":  # breaking-news open: low thump + rising air
+        out = np.zeros(int(1.0 * SR)); th = make("stamp") * 1.25; sw = noise_sweep(0.95, 420, 5200, 0.06)
+        out[: len(th)] += th; out[: len(sw)] += sw
+        return out
     raise ValueError(kind)
 
 

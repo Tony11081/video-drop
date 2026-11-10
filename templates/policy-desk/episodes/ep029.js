@@ -2,7 +2,7 @@
    EP.029 · Listing appeals now open to all sellers — community announcement "UPDATED OCT 22: New ways to navigate listing removals" (185800), staff reply ~2026-11-09 "Listing appeals are now available to all Etsy sellers" (earlier than the "by end of 2026" in Seller Handbook 2026-07-23 article 1402820802974); appeal rules from help.etsy.com 33558571339159 (6 months, once per listing, 12 files, video ≤3 min, finished-item video not proof, partner evidence examples) — tts 3a5796579e43 (Bo, round 1 of 2; round 2 had longer pauses) · OUR TAKE: appeals for everyone ≠ wins for everyone; the outcome is decided before removal by whether you kept process evidence — design + factory shops should archive design files, factory chats and production videos per item now */
 window.EP = {
   speed: 1.3, lead: 0.30, tail: 3.0,
-  episode: "EP.029",
+  episode: "EP.029", date: "2026-11-10",
   source: "SOURCE · ETSY COMMUNITY · LISTING REMOVALS & APPEALS",
   tts: { id: "3a5796579e43", voice: "zh-CN-Bo:MAI-Voice-2.1", gap: 0.3 },
   follow: "关注 · 每天一条 Etsy 政策速递",

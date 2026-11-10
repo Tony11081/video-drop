@@ -42,14 +42,13 @@
   const lines = (arr, cls, t0 = 0.05, step = 0.08, dimFirst = false) =>
     arr.map((l, i) => `<span class="ln"><span class="chrome ${dimFirst && i === 0 && arr.length > 1 ? "dim" : ""} ${cls || ""}" data-a="rise@${f2(t0 + i * step)}">${esc(l)}</span></span>`).join("");
   const isTake = (s) => /^OUR TAKE/i.test((s && s.kicker) || "");
-  const stamp = (style, at = 0.15) => `<div class="abs take" style="${style}" data-a="stamp@${f2(at)}"><span>我们的看法</span><small>OUR TAKE · SHOPWRIGHT</small></div>`;
   const head = (s) => {
     let h = "";
-    if (s.rule) h += `<div class="abs ghost" style="right:56px;top:290px" data-a="up@0.1">${pad(s.rule)}</div>
-      <div class="abs idx" style="left:72px;top:322px" data-a="up@0">${UNIT} ${pad(s.rule)} <em>/ ${pad(N)}</em></div>`;
-    else if (isTake(s)) h += `<div class="abs idx" style="left:72px;top:322px" data-a="up@0">OUR TAKE <em>/ 观点</em></div>${stamp("right:72px;top:292px")}`;
-    else if (s.kicker) h += `<div class="abs status" style="left:72px;top:312px" data-a="up@0"><span class="pulse"></span>${esc(s.kicker)}</div>`;
-    if (s.title) h += `<div class="abs" style="left:72px;top:${s.rule ? 366 : 380}px">
+    if (s.rule) h += `<div class="abs ghost" style="right:54px;top:296px" data-a="up@0.1">${pad(s.rule)}</div>
+      <div class="abs tab" style="left:72px;top:304px" data-a="wipe@0"><b>${UNIT} ${pad(s.rule)}</b><span>OF ${pad(N)}</span></div>`;
+    else if (isTake(s)) h += `<div class="abs tab" style="left:72px;top:304px" data-a="wipe@0.1"><b>ANALYSIS</b><i>我们的看法</i></div>`;
+    else if (s.kicker) h += `<div class="abs status" style="left:72px;top:304px" data-a="wipe@0"><span class="pulse"></span>${esc(s.kicker)}</div>`;
+    if (s.title) h += `<div class="abs" style="left:72px;top:380px">
         ${s.title.length > 1 ? `<div class="t1">${lines([s.title[0]], "dim", 0.05)}</div>` : ""}
         <div class="t2">${lines([s.title[s.title.length - 1]], "", 0.12)}</div></div>`;
     return h;
@@ -75,7 +74,7 @@
   const comet = (el, u, a, d = 1.3) => { const p = P(u, a, d); el.style.setProperty("--ang", 360 * eio(p) + "deg"); el.style.setProperty("--co", p > 0 && p < 1 ? 1 : 0); };
   const addOverlay = (g, s, x, y, w, h) => {
     if (!s.video) return;
-    const st = g.i === 0 ? 0.05 : g.start + 0.08;
+    const st = g.i === 0 ? (s.sting === false ? 0.05 : 0.95 * K) : g.start + 0.08;
     OVERLAYS.push({ video_id: s.video, start: +st.toFixed(3), from: s.from || 0, duration: +Math.min(g.end - st + 0.12, TOTAL - st - 0.05).toFixed(3), x, y, w, h, fade: 0.3 });
   };
   const fmtNum = (n, dec = 0) => (dec ? n.toFixed(dec) : Math.round(n).toLocaleString("en-US"));
@@ -84,23 +83,30 @@
   const T = {};
   const FY = 262, FH = 608;                           // full-width 16:9 footage window
   T.hook = (s, g) => {
-    const vid = !!s.video, fs = s.lines.length > 1 ? 92 : 108;
+    const vid = !!s.video, sting = s.sting !== false, fs = s.lines.length > 1 ? 80 : 96;
     addOverlay(g, s, 0, FY, 1080, FH);
     return {
       html: `
-      ${vid ? vframe(0, FY, 1080, FH) : photo(s.img, `left:0;top:${FY}px;width:1080px;height:${FH}px`, "reveal@0", s.pos || "center 60%")}
-      ${vid ? "" : '<div class="scan"></div>'}
-      <div class="abs lt3" style="left:0;right:0;top:${FY + FH}px" data-a="wipe@0.2"><b>快讯</b><span>${esc(s.kicker)}</span>${s.scanTag ? `<em>${esc(s.scanTag)}</em>` : ""}</div>
-      <div class="abs" style="left:72px;top:${FY + FH + 88}px;font-weight:900;font-size:${fs}px;line-height:1.14;letter-spacing:-.03em">
-        ${lines(s.lines, "", 0.05, 0.08)}
-        <span class="ln"><span data-a="rise@0.21"><span class="marker"><span class="chrome">${esc(s.marked)}</span></span></span></span>
+      ${vid ? vframe(0, FY, 1080, FH) : photo(s.img, `left:0;top:${FY}px;width:1080px;height:${FH}px`, "fade@0", s.pos || "center 60%")}
+      ${sting ? `<div class="abs sting" style="left:0;top:${FY}px;width:1080px;height:${FH}px"><div class="sg"></div><div class="sh"></div>
+        <div class="s1">BREAKING</div><div class="s2"><b>NEWS</b><span>突发</span></div><div class="s3">ETSY POLICY · 政策速递</div></div>` : ""}
+      <div class="abs lt3" style="left:0;right:0;top:${FY + FH}px" data-a="wipe@0.1"><b>BREAKING NEWS</b><i>快讯</i><span>${esc(s.kicker)}</span></div>
+      <div class="abs straps" style="left:72px;top:${FY + FH + 88}px;font-size:${fs}px">
+        ${s.lines.map((l, i) => `<div class="strap" data-a="wipe@${f2(0.22 + i * 0.12)}">${esc(l)}</div>`).join("")}
+        <div class="strap red" data-a="wipe@${f2(0.22 + s.lines.length * 0.12)}">${esc(s.marked)}</div>
       </div>`,
       fx(r, u, D) {
         const im = $(r, ".photo .img"); if (im) im.style.setProperty("--kb", 1.14 - 0.14 * eo((u / D) * 1.2));
-        const sc = $(r, ".scan"); if (sc) scanAt(sc, u, 0.55, 1.0, FY, FY + FH);
-        $(r, ".marker").style.setProperty("--mk", eo(P(u, 0.75, 0.55)));
+        const st = $(r, ".sting");
+        if (st) {
+          const i = eo(P(u, 0, 0.3)), o = eio(P(u, 0.84, 0.26));
+          st.style.clipPath = `inset(${o * 100}% ${(1 - i) * 100}% 0 0)`;
+          $(st, ".s1").style.transform = `translateX(${(1 - eo(P(u, 0.03, 0.5))) * -420}px)`;
+          $(st, ".s2").style.transform = `translateX(${(1 - eo(P(u, 0.1, 0.5))) * 480}px)`;
+          $(st, ".sg").style.transform = `translateX(${-u * 130}px)`;
+        }
       },
-      cues: [[0.55, "scan"], [0.8, "soft"], [1.4, "bad"]],
+      cues: [[0.02, "hit"], [0.3, "soft"], [0.95, "whoosh"]],
     };
   };
   T.index = (s) => ({
@@ -302,14 +308,16 @@
     };
   };
   T.cta = (s, g) => {
-    const vid = !!s.video, take = isTake(s);
+    const vid = !!s.video, take = isTake(s), fs = s.title.some((x) => [...x].length > 8) ? 86 : 104;
     addOverlay(g, s, 0, FY, 1080, FH);
     return {
       html: `
-      ${vid ? vframe(0, FY, 1080, FH) : photo(s.img, `left:0;top:${FY}px;width:1080px;height:${FH}px`, "reveal@0")}
-      <div class="abs lt3" style="left:0;right:0;top:${FY + FH}px" data-a="wipe@0.2"><b>${take ? "观点" : "快讯"}</b><span>${esc(take ? "OUR TAKE · SHOPWRIGHT" : s.kicker || "")}</span></div>
-      <div class="abs" style="left:72px;top:${FY + FH + 124}px;font-weight:900;font-size:124px;line-height:1.1;letter-spacing:-.04em">${lines(s.title, "", 0.08)}</div>
-      <div class="abs note" style="left:72px;top:1304px;font-size:22px" data-a="fade@1.1">${esc(s.word || "Shopwright")} · ${esc(s.url)}${s.note ? " · " + esc(s.note) : ""}</div>`,
+      ${vid ? vframe(0, FY, 1080, FH) : photo(s.img, `left:0;top:${FY}px;width:1080px;height:${FH}px`, "fade@0")}
+      <div class="abs lt3" style="left:0;right:0;top:${FY + FH}px" data-a="wipe@0.2"><b>${take ? "ANALYSIS" : "BREAKING NEWS"}</b><i>${take ? "观点" : "快讯"}</i><span>${esc(take ? "OUR TAKE · SHOPWRIGHT" : s.kicker || "")}</span></div>
+      <div class="abs straps" style="left:72px;top:${FY + FH + 92}px;font-size:${fs}px">
+        ${s.title.map((l, i) => `<div class="strap ${i === s.title.length - 1 ? "red" : ""}" data-a="wipe@${f2(0.3 + i * 0.14)}">${esc(l)}</div>`).join("")}
+      </div>
+      <div class="abs note" style="left:72px;top:1262px" data-a="fade@1.1">${esc(s.word || "Shopwright")} · ${esc(s.url)}${s.note ? " · " + esc(s.note) : ""}</div>`,
       fx(r, u, D) {
         const im = $(r, ".photo .img"); if (im) im.style.setProperty("--kb", 1.12 - 0.12 * eo(P(u, 0, D)));
       },
@@ -350,7 +358,11 @@
     prevStep = step;
     return { g, i: g.i, el, def, anims, chromes: $$(el, ".chrome"), last: g.i === G.length - 1, step };
   });
+  const dp = E.date ? E.date.split("-").map(Number) : (() => { const d = new Date(Date.now() + 8 * 3600e3); return [d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate()]; })();
+  const wd = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"][new Date(Date.UTC(dp[0], dp[1] - 1, dp[2])).getUTCDay()];
   document.getElementById("epitext").textContent = E.episode;
+  document.getElementById("epidate").textContent = `${pad(dp[1])}.${pad(dp[2])} ${wd}`;
+  document.getElementById("tdate").textContent = E.site || "openaigrowth.com";
   const srcIn = document.getElementById("src");
   srcIn.innerHTML = `<span>${esc(E.source.replace(/^SOURCE\s*·\s*/i, ""))}</span>`.repeat(6);
   const segW = srcIn.firstChild.getBoundingClientRect().width || 600;
@@ -405,6 +417,29 @@
   const followEl = document.getElementById("follow"), srcEl = document.getElementById("tick");
   if (followEl) followEl.innerHTML = FOLLOW ? `<span class="plus">＋</span><span class="ft">${esc(FOLLOW)}</span>` : "";
 
+  /* ---------- studio backdrop ---------- */
+  const gx = document.getElementById("globe").getContext("2d");
+  let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const PTS = [...Array(52)].map(() => [Math.asin(rnd() * 1.7 - 0.85), rnd() * Math.PI * 2, 0.45 + rnd() * 0.55]);
+  function globe(o) {
+    const cx = 800, cy = 720, R = 610, tilt = 0.36, rot = o * 0.09, ct = Math.cos(tilt), st = Math.sin(tilt);
+    const pr = (phi, lam) => { const x = Math.cos(phi) * Math.sin(lam), y = Math.sin(phi), z = Math.cos(phi) * Math.cos(lam); return [cx + R * x, cy - R * (y * ct - z * st), y * st + z * ct]; };
+    const seg = (a, b) => { const z = (a[2] + b[2]) / 2; gx.strokeStyle = `rgba(120,168,255,${z > 0 ? 0.09 + 0.2 * z : 0.04})`; gx.beginPath(); gx.moveTo(a[0], a[1]); gx.lineTo(b[0], b[1]); gx.stroke(); };
+    gx.clearRect(0, 0, 1080, 1500); gx.lineWidth = 1.5;
+    for (let k = 0; k < 24; k++) { const lam = rot + (k * Math.PI) / 12; let a = pr(-Math.PI / 2, lam); for (let j = 1; j <= 24; j++) { const b = pr(-Math.PI / 2 + (j * Math.PI) / 24, lam); seg(a, b); a = b; } }
+    for (let k = -5; k <= 5; k++) { const phi = (k * Math.PI) / 12; let a = pr(phi, 0); for (let j = 1; j <= 48; j++) { const b = pr(phi, (j * Math.PI) / 24); seg(a, b); a = b; } }
+    const g = gx.createRadialGradient(cx, cy, R * 0.9, cx, cy, R * 1.07);
+    g.addColorStop(0, "rgba(90,150,255,0)"); g.addColorStop(0.6, "rgba(120,170,255,.22)"); g.addColorStop(1, "rgba(90,150,255,0)");
+    gx.fillStyle = g; gx.beginPath(); gx.arc(cx, cy, R * 1.07, 0, 7); gx.fill();
+    PTS.forEach(([phi, lam, a]) => {
+      const q = pr(phi, lam + rot); if (q[2] <= 0.05) return;
+      const tw = 0.6 + 0.4 * Math.sin(o * 1.3 + lam * 9), v = a * q[2] * tw;
+      gx.fillStyle = `rgba(130,178,255,${0.18 * v})`; gx.beginPath(); gx.arc(q[0], q[1], 12, 0, 7); gx.fill();
+      gx.fillStyle = `rgba(255,255,255,${0.6 * v})`; gx.beginPath(); gx.arc(q[0], q[1], 3.2, 0, 7); gx.fill();
+    });
+  }
+  const wipeEl = document.getElementById("wipe"), WB = $$(wipeEl, "i");
+
   /* ---------- per-frame ---------- */
   function apply(a, u) {
     const n = a.n, f = a.fx;
@@ -415,13 +450,17 @@
     else if (f === "fade") { n.style.opacity = eo(P(u, a.at, a.d || 0.5)); }
     else if (f === "stamp") { const p = P(u, a.at, a.d || 0.3), e = eo(p); n.style.opacity = cl(p * 4); n.style.transform = `rotate(-6deg) scale(${2.4 - 1.4 * e})`; }
     else if (f === "wipe") { const e = eo(P(u, a.at, a.d || 0.6)); n.style.clipPath = `inset(0 ${(1 - e) * 100}% 0 0)`; }
-    else if (f === "slip") { const e = eo(P(u, a.at, a.d || 0.8)); n.style.opacity = cl(e * 1.6); n.style.transform = `translateX(${(1 - e) * 140}px) rotate(${-1.2 + (1 - e) * 4}deg)`; }
+    else if (f === "slip") { const e = eo(P(u, a.at, a.d || 0.8)); n.style.opacity = cl(e * 1.6); n.style.transform = `translateX(${(1 - e) * 160}px)`; }
   }
   function seek(t) {
     const F = Math.round(t * 30);
     const st = document.getElementById("stage");
-    st.style.setProperty("--mx", 50 + 30 * Math.sin(t * 0.21) + "%");
-    st.style.setProperty("--my", 26 + 12 * Math.cos(t * 0.29) + "%");
+    st.style.setProperty("--bx", 46 + 34 * Math.sin((t / K) * 0.23) + "%");
+    st.style.setProperty("--bx2", 58 + 40 * Math.cos((t / K) * 0.17) + "%");
+    globe(t / K);
+    let wp = -1; for (let i = 1; i < G.length; i++) { const p = ((t - G[i].start) / K + 0.2) / 0.44; if (p > 0 && p < 1) wp = p; }
+    wipeEl.style.display = wp < 0 ? "none" : "block";
+    if (wp >= 0) { const x = -1150 + 2700 * eio(wp); [0, -200, -300].forEach((d, i) => { WB[i].style.transform = `translateX(${x + d}px) skewX(-18deg)`; }); }
     document.getElementById("grain").style.transform = `translate(${(F * 37) % 60 - 30}px,${(F * 53) % 60 - 30}px)`;
     const pp = ((t / K) % 1.8) / 1.8;
     $$(document, ".pulse").forEach((p) => { p.style.setProperty("--po", (1 - pp) * 0.8); p.style.setProperty("--ps", 1 + pp * 0.9); });
@@ -474,7 +513,7 @@
   let SFX;
   if (E.sfx === "full") SFX = RAW.map(([t, k]) => [t, k]);
   else {
-    const PR = { stamp: 6, scan: 5, bad: 4, ok: 3, whoosh: 2 }, best = {};
+    const PR = { hit: 7, stamp: 6, scan: 5, bad: 4, ok: 3, whoosh: 2 }, best = {};
     RAW.forEach(([t, k, i]) => { const p = PR[k]; if (p !== undefined && (!best[i] || p > best[i][2])) best[i] = [t, k, p]; });
     const minGap = (E.sfxGap || 8) * K; let last = -1e9; SFX = [];
     Object.values(best).sort((a, b) => a[0] - b[0]).forEach(([t, k]) => { if (t - last >= minGap) { SFX.push([t, k]); last = t; } });
