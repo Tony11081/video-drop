@@ -48,8 +48,7 @@
 - [ ] 新增（11-09）：快速上架表单 Quick list form（测试中）：按照片和描述建议标题、标签、属性（etsy.com/news Newly Crafted Fall 2026）
 - [ ] 新增（11-09）：Etsy 广告分组 Ad groups：一次把多个商品加进一组、按组看效果（同上）
 - [ ] 新增（11-09）：店铺统计提速 + 并排对比图（访问、订单、转化率、收入，逐步上线）（同上）
-- [ ] 新增（11-09）：下架申诉扩大——2026 年底前所有卖家在大多数政策类别都能申诉（同上；EP.012 的「更新」）
-  - 进行中 · 2026-11-10 · 政策速递 EP.029：社区公告 UPDATED OCT 22 New ways to navigate listing removals（185800）官方 11-09 回复「申诉已对所有卖家开放」
+- [x] EP.029（11-10）下架申诉全员开放（EP.012 的「更新」）：社区公告 UPDATED OCT 22: New ways to navigate listing removals（185800）官方约 11-09 回复「Listing appeals are now available to all Etsy sellers」，早于卖家手册 1402820802974（2026-07-23）写的「今年底前」；以前被下架的 6 个月内也能申诉、违规原因写得更细；申诉规则取帮助中心 33558571339159（每个商品一次、最多 12 个文件、视频 ≤3 分钟、只拍成品不算、代工店的证据例子）；OUR TAKE：申诉人人有、翻盘靠平时留档，设计+代工店每个款留设计稿/工厂沟通/生产视频。近 7 天其他新帖：内容创作 workshop（活动，非规则）
 - [ ] 新增（11-09）：欧盟包装 EPR 请愿进展（社区公告 An update on our EU packaging and EPR petition 189952；EP.006 的「更新」，先核对有没有新规则）
 - [ ] 新增：Marketplace Insights 搜索词推荐 + AI 数据助手（测试中，同上）
 - [x] 定制订单改进（社区公告 Updated 7/30）——已并入 EP.026，不再单做
