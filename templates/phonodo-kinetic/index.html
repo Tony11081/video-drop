@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#0b0b0d}
+body{font-family:"Inter Display","Inter","Noto Sans CJK SC",sans-serif;color:#f3f1ea;-webkit-font-smoothing:antialiased}
+#root{position:absolute;inset:0;overflow:hidden}
+.abs{position:absolute}
+.c{position:absolute;left:0;width:1080px;text-align:center}
+.g{color:#6d4aff}
+.card{position:absolute;border-radius:36px;background:#1a1a1e;border:2px solid rgba(243,241,234,.10)}
+.chip{display:inline-block;padding:18px 34px;border-radius:999px;border:3px solid currentColor;font-size:40px;font-weight:700;margin:0 10px}
+</style></head><body><div id="root"></div>
+<script>
+const INK='#0b0b0d',PAPER='#f3f1ea',ACC='#6d4aff';
+const DARK={bg:INK,fg:PAPER,mute:'rgba(243,241,234,.55)',line:'rgba(243,241,234,.13)',glow:.30,dark:1},LIGHT={bg:PAPER,fg:INK,mute:'rgba(11,11,13,.55)',line:'rgba(11,11,13,.10)',glow:.16,dark:0};
+let TH=DARK;
+const BPM=120, SPB=60/BPM, TOTAL=52;
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const p=(b,s,d)=>cl((b-s)/d);
+const eo=x=>1-Math.pow(1-x,3);
+const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const back=x=>{const c=2.2;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+const fr=b=>b-Math.floor(b);
+const pulse=(b,k=5)=>Math.exp(-k*fr(b));
+const hit=(b,s,k=6)=>b<s?0:Math.exp(-k*(b-s));
+const mix=(a,b,x)=>a+(b-a)*x;
+const rnd=i=>{const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)};
+
+function bg(b,th=DARK){
+  TH=th; const pu=pulse(b,4), t=b*SPB;
+  const x1=540+Math.sin(t*.7)*220, y1=960+Math.cos(t*.5)*420, r=700+pu*80;
+  let s=`<div class="abs" style="inset:0;background:radial-gradient(${r}px ${r}px at ${x1}px ${y1}px,rgba(109,74,255,${th.glow+pu*.10}),transparent 72%),${th.bg};color:${th.fg}"></div>`;
+  const off=(t*60)%120;
+  s+=`<div class="abs" style="inset:-120px;transform:translateY(${off}px);background-image:linear-gradient(${th.line} 2px,transparent 2px),linear-gradient(90deg,${th.line} 2px,transparent 2px);background-size:120px 120px"></div>`;
+  return s;
+}
+// word that slams in at beat s
+function slam(txt,b,s,o={}){
+  if(b<s) return '';
+  const q=eo(p(b,s,.45)), sc=mix(o.from||2.8,1,q)*(1+.03*hit(b,s,3));
+  const blur=(1-q)*24;
+  const out=o.out!=null?p(b,o.out,.35):0;
+  return `<div class="c ${o.cls||''}" style="top:${o.y}px;font-size:${o.size||200}px;font-weight:900;letter-spacing:${o.ls||'-4px'};line-height:1;color:${o.cls?'':(o.color||TH.fg)};opacity:${cl(q*1.6)*(1-out)*(o.op!=null?o.op:1)};transform:translateY(${-out*120}px) scale(${sc});filter:blur(${blur}px);${o.style||''}">${txt}</div>`;
+}
+function flash(b,beats){let a=0;for(const s of beats)a=Math.max(a,hit(b,s,9));return a>0.01?`<div class="abs" style="inset:0;background:${PAPER};opacity:${a*.7}"></div>`:''}
+function shake(b,beats){let a=0,i=0;for(const s of beats){a=Math.max(a,hit(b,s,7))}const f=Math.floor(b*SPB*30);return `translate(${(rnd(f)-.5)*46*a}px,${(rnd(f+9)-.5)*46*a}px)`}
+
+/* ---------- phone ---------- */
+const PW=640,PH=1300,PX=220,PY=470;
+function phone(inner,b,s,o={}){
+  const q=back(p(b,s,.9)), pu=pulse(b,5);
+  const y=mix(900,0,cl(q,-1,2)), rot=mix(-14,0,eo(p(b,s,.9)));
+  const kick=o.kick!=null?hit(b,o.kick,5):0;
+  return `<div class="abs" style="left:${PX}px;top:${PY}px;width:${PW}px;height:${PH}px;transform:translateY(${y}px) rotate(${rot+(o.tilt||0)}deg) scale(${1+pu*.012+kick*.05});">
+   
+   <div class="abs" style="inset:0;border-radius:96px;background:#0b0b0d;color:#f3f1ea;border:7px solid ${TH.dark?'#3a3a42':'#0b0b0d'};box-shadow:0 50px 110px rgba(0,0,0,${TH.dark?.6:.28});overflow:hidden">
+     <div class="abs" style="left:220px;top:26px;width:200px;height:44px;border-radius:30px;background:#000"></div>
+     <div class="abs" style="left:54px;top:30px;font-size:30px;font-weight:700">9:41</div>
+     ${inner}
+   </div></div>`;
+}
+function label(b,s,num,cn,en){
+  const q=eo(p(b,s,.5)), q2=eo(p(b,s+.25,.5));
+  return `<div class="abs" style="left:70px;top:120px;font-size:150px;font-weight:900;line-height:1;color:transparent;-webkit-text-stroke:4px ${TH.fg};opacity:${q*.5};transform:translateX(${mix(-300,0,q)}px)">${num}</div>
+  <div class="abs" style="left:300px;top:112px;font-size:150px;font-weight:900;line-height:1.05;letter-spacing:-4px;color:${TH.fg};opacity:${cl(q2*1.5)};transform:translateX(${mix(360,0,q2)}px) scale(${1+.04*hit(b,s+.25,4)});transform-origin:left center;white-space:nowrap">${cn}</div>
+  <div class="abs" style="left:76px;top:300px;font-size:44px;font-weight:800;letter-spacing:14px;color:${ACC};opacity:${p(b,s+.6,.5)}">${en}</div>`;
+}
+function chips(b,arr){ // arr: [beat,text]
+  let s=`<div class="c" style="top:1800px;color:${TH.fg}">`;
+  for(const [at,t] of arr){const q=back(p(b,at,.5));s+=`<span class="chip" style="opacity:${cl(p(b,at,.2)*2)};transform:translateY(${mix(80,0,cl(q,0,1.3))}px) scale(${.6+.4*cl(q,0,1.3)});display:inline-block">${t}</span>`}
+  return s+'</div>';
+}
+function wave(b,x,y,w,h,n,col,amp=1){
+  let s='';const t=b*SPB,pu=pulse(b*2,4);
+  for(let i=0;i<n;i++){const a=(.25+.75*Math.abs(Math.sin(i*.9+t*7)*Math.cos(i*.37+t*3.1)))*(.55+.45*pu)*amp;const hh=Math.max(10,h*a);
+    s+=`<div class="abs" style="left:${x+i*(w/n)}px;top:${y+(h-hh)/2}px;width:${w/n*.55}px;height:${hh}px;border-radius:99px;background:${col}"></div>`}
+  return s;
+}
+
+/* ---------- scenes ---------- */
+function sHook(b){
+  let s=bg(b);
+  const dim=p(b,3,.3);
+  const st=`opacity:${1-dim*.6}`;
+  s+=slam('你的 AI',b,0,{y:520,size:210,op:1-dim*.6,out:3.9});
+  s+=slam('只会',b,1,{y:790,size:260,op:1-dim*.6,out:3.9});
+  s+=slam('聊天？',b,2,{y:1100,size:260,op:1-dim*.6,out:3.9});
+  // strike
+  const q=eo(p(b,3,.3));
+  if(b>=3) s+=`<div class="abs" style="left:110px;top:1290px;width:${860*q}px;height:26px;border-radius:13px;background:${ACC};transform:rotate(-8deg);transform-origin:left center;opacity:${1-p(b,3.9,.2)}"></div>`;
+  return s;
+}
+function sGive(b){
+  let s=bg(b,LIGHT);
+  s+=slam('给它',b,4,{y:400,size:230});
+  s+=slam('一台',b,5,{y:680,size:230});
+  s+=slam('手机',b,6,{y:960,size:340,cls:'g',ls:'-8px'});
+  const q=eo(p(b,7,.5));
+  s+=`<div class="c" style="top:1420px;font-size:62px;font-weight:800;letter-spacing:10px;color:${TH.fg};opacity:${q};transform:translateY(${mix(80,0,q)}px)">GIVE YOUR AI A PHONE</div>`;
+  for(let i=0;i<3;i++){const r=eo(p(b,7+i*.18,.9));if(b>=7+i*.18)s+=`<div class="abs" style="left:${540-r*900}px;top:${1130-r*900}px;width:${r*1800}px;height:${r*1800}px;border-radius:50%;border:5px solid rgba(109,74,255,${(1-r)*.9})"></div>`}
+  return s;
+}
+function sCall(b){
+  let s=bg(b)+label(b,8,'01','打电话','AI CALLS');
+  const sec=String(Math.max(0,Math.floor((b-8)*1.5))).padStart(2,'0');
+  const pu=pulse(b,4);
+  let inn=`<div class="c" style="width:${PW}px;top:120px;font-size:34px;font-weight:700;color:rgba(243,241,234,.6)"><span style="color:${ACC}">●</span> AI 通话中 · 00:${sec}</div>`;
+  for(let i=0;i<3;i++){const r=fr((b+i/3)/1);inn+=`<div class="abs" style="left:${320-110-r*150}px;top:${390-110-r*150}px;width:${220+r*300}px;height:${220+r*300}px;border-radius:50%;border:4px solid rgba(109,74,255,${(1-r)*.8})"></div>`}
+  inn+=`<div class="abs" style="left:210px;top:280px;width:220px;height:220px;border-radius:50%;background:${ACC};display:flex;align-items:center;justify-content:center;font-size:84px;font-weight:900;transform:scale(${1+pu*.1})">AI</div>`;
+  inn+=`<div class="c" style="width:${PW}px;top:590px;font-size:52px;font-weight:800">正在致电 · 牙科诊所</div><div class="c" style="width:${PW}px;top:672px;font-size:34px;font-weight:600;color:rgba(243,241,234,.5)">来电显示：你的号码</div>`;
+  inn+=wave(b,90,770,460,170,22,PAPER);
+  const bub=eo(p(b,10,.4));
+  inn+=`<div class="card" style="left:44px;top:990px;width:552px;padding:28px 32px;font-size:34px;line-height:1.45;font-weight:600;opacity:${bub};transform:translateY(${mix(60,0,bub)}px);position:absolute">“您好，我是 AI 助理，想问周四下午还有空位吗？”</div>`;
+  s+=phone(inn,b,8,{kick:14});
+  // confirm card
+  const q=back(p(b,12,.6)), ok=b>=14, okp=hit(b,14,5);
+  if(b>=12) s+=`<div class="abs" style="left:${mix(-700,60,cl(q,0,1.2))}px;top:1560px;width:620px;height:170px;border-radius:44px;background:${ok?ACC:PAPER};color:${ok?'#fff':INK};box-shadow:0 30px 80px rgba(0,0,0,.5);transform:scale(${1+okp*.12})">
+    <div class="abs" style="left:34px;top:35px;width:100px;height:100px;border-radius:30px;background:${ok?'rgba(255,255,255,.22)':ACC};color:#fff;font-size:70px;font-weight:900;text-align:center;line-height:100px">✓</div>
+    <div class="abs" style="left:166px;top:30px;font-size:50px;font-weight:900">${ok?'已确认，拨出':'需要你确认'}</div>
+    <div class="abs" style="left:166px;top:100px;font-size:34px;font-weight:600;opacity:.7">拨打电话 · 用你的号码</div></div>`;
+  s+=chips(b,[[9,'用你的号码'],[13,'拨出前等你点头']]);
+  return s;
+}
+function sAnswer(b){
+  let s=bg(b,LIGHT)+label(b,16,'02','代接来电','AI ANSWERS');
+  let inn=`<div class="c" style="width:${PW}px;top:120px;font-size:34px;font-weight:700;color:rgba(243,241,234,.6)">漏接来电 · AI 已代接</div>`;
+  const cards=[[17,'王先生','需回电','下午 3 点的会能改到周五吗？'],[19,'李女士','留言','周五的快递改送公司。'],[21,'诊所','留言','体检报告已出，可来取。']];
+  cards.forEach(([at,n,tag,txt],i)=>{ if(b<at)return; const q=back(p(b,at,.55)), h=hit(b,at,5);
+    inn+=`<div class="card" style="left:36px;top:${200+i*262}px;width:568px;height:236px;background:${PAPER};color:${INK};border:none;transform:translateY(${mix(-500,0,cl(q,0,1.25))}px) scale(${1+h*.05})">
+      <div class="abs" style="left:30px;top:26px;width:76px;height:76px;border-radius:24px;background:${i==0?ACC:INK}"></div>
+      <div class="abs" style="left:128px;top:30px;font-size:44px;font-weight:900">${n}</div>
+      <div class="abs" style="right:28px;top:34px;font-size:28px;font-weight:800;padding:8px 20px;border-radius:99px;background:${i==0?ACC:'rgba(11,11,13,.08)'};color:${i==0?'#fff':'rgba(11,11,13,.6)'}">${tag}</div>
+      <div class="abs" style="left:30px;top:128px;right:28px;font-size:36px;font-weight:600;line-height:1.3">${txt}</div></div>`});
+  const q=back(p(b,22,.5)), pr=hit(b,23,5);
+  if(b>=22) inn+=`<div class="abs" style="left:110px;top:1030px;width:420px;height:120px;border-radius:60px;background:${ACC};text-align:center;line-height:120px;font-size:50px;font-weight:900;transform:scale(${cl(q,0,1.3)*(1-pr*.12)})">让 AI 回电</div>`;
+  if(b>=23){const r=eo(p(b,23,.8));inn+=`<div class="abs" style="left:${320-r*500}px;top:${1090-r*500}px;width:${r*1000}px;height:${r*1000}px;border-radius:50%;border:6px solid rgba(243,241,234,${(1-r)})"></div>`}
+  s+=phone(inn,b,16,{kick:16});
+  s+=chips(b,[[18,'不用换号'],[20,'留言推到你手机']]);
+  return s;
+}
+function sNotes(b){
+  let s=bg(b)+label(b,24,'03','会议纪要','MEETING NOTES');
+  let inn=`<div class="c" style="width:${PW}px;top:120px;font-size:34px;font-weight:700;color:rgba(243,241,234,.6)"><span style="color:${ACC};opacity:${.4+.6*pulse(b,3)}">●</span> 录音中 · 12:${48+Math.floor((b-24)/2)}</div>`;
+  inn+=wave(b,60,190,520,150,26,ACC,b<28?1:.45);
+  const lines=[[25,'A','预算下周五前定稿。'],[26,'B','我来跟进供应商报价。'],[27,'A','那周三我们再对一次。']];
+  lines.forEach(([at,w,t],i)=>{ if(b<at)return; const n=Math.ceil(t.length*p(b,at,.7)), q=eo(p(b,at,.3));
+    inn+=`<div class="abs" style="left:50px;top:${390+i*96}px;opacity:${q};transform:translateX(${mix(-60,0,q)}px);font-size:38px;font-weight:600;white-space:nowrap"><span style="display:inline-block;width:56px;height:56px;line-height:56px;text-align:center;border-radius:50%;background:${w=='A'?ACC:'rgba(243,241,234,.22)'};font-weight:900;font-size:30px;margin-right:18px">${w}</span>${t.slice(0,n)}</div>`});
+  const q=back(p(b,28,.6));
+  if(b>=28){ let c=`<div class="abs" style="left:34px;top:26px;font-size:40px;font-weight:900;color:${INK}">会议纪要 · 3 个待办</div>`;
+    [[29,'周五前定稿预算'],[30,'跟进供应商报价'],[31,'周三下午复盘']].forEach(([at,t],i)=>{const on=b>=at,h=hit(b,at,5);
+      c+=`<div class="abs" style="left:34px;top:${112+i*104}px;width:68px;height:68px;border-radius:20px;border:5px solid ${on?ACC:'rgba(11,11,13,.25)'};background:${on?ACC:'transparent'};color:#fff;font-size:48px;font-weight:900;text-align:center;line-height:58px;transform:scale(${1+h*.5})">${on?'✓':''}</div>
+          <div class="abs" style="left:128px;top:${118+i*104}px;font-size:42px;font-weight:700;color:${on?INK:'rgba(11,11,13,.45)'}">${t}</div>`});
+    inn+=`<div class="card" style="left:36px;top:720px;width:568px;height:450px;background:${PAPER};border:none;transform:translateY(${mix(700,0,cl(q,0,1.2))}px);box-shadow:0 -20px 60px rgba(0,0,0,.5)">${c}</div>`}
+  s+=phone(inn,b,24,{kick:24});
+  s+=chips(b,[[26,'自动转成文字'],[30,'待办变提醒']]);
+  return s;
+}
+function sApps(b){
+  let s=bg(b,LIGHT)+label(b,32,'04','操作 App','ANY APP');
+  const cols=['#ff5a5f','#12c26a','#ffb020','#3b82f6','#22c7e6','#9b7bff','#ff7ab6','#14b8a6','#f97316','#6366f1','#e11d48','#84cc16','#0ea5e9','#a855f7','#f59e0b','#10b981'];
+  const gl=['聊','购','图','拍','邮','记','乐','行','单','文','视','账','搜','票','笔','表'];
+  const seq=[0,8,2,3,4,12,5,15], acts=['回消息','查订单','发内容','拍照片','回邮件','搜资料','记备忘','填表格'];
+  const k=cl(Math.floor(b-32),0,7), cur=seq[k], prev=seq[Math.max(0,k-1)], mv=eio(p(b,32+k,.35));
+  const pos=i=>[60+(i%4)*136,330+Math.floor(i/4)*190];
+  let inn=`<div class="c" style="width:${PW}px;top:118px;font-size:34px;font-weight:700;color:rgba(243,241,234,.6)">智能体正在操作</div>`;
+  const tq=eo(p(b,32+k,.3));
+  inn+=`<div class="c" style="width:${PW}px;top:176px;color:${PAPER};font-size:76px;font-weight:900;transform:translateY(${mix(50,0,tq)}px);opacity:${tq}">${acts[k]}</div>`;
+  for(let i=0;i<16;i++){const [x,y]=pos(i),ent=back(p(b,32+i*.04,.5)),on=i==cur,h=on?hit(b,32+k+.3,4):0;
+    inn+=`<div class="abs" style="left:${x}px;top:${y}px;width:112px;height:112px;border-radius:32px;background:${on?ACC:'rgba(243,241,234,.10)'};color:${on?'#fff':'rgba(243,241,234,.7)'};transform:scale(${cl(ent,0,1.3)*(1+h*.35)});text-align:center;line-height:112px;font-size:56px;font-weight:900">${gl[i]}</div>`}
+  const [x0,y0]=pos(prev),[x1,y1]=pos(cur),cx=mix(x0,x1,mv)+56,cy=mix(y0,y1,mv)+56,tp=hit(b,32+k+.3,6);
+  inn+=`<div class="abs" style="left:${cx-50-tp*30}px;top:${cy-50-tp*30}px;width:${100+tp*60}px;height:${100+tp*60}px;border-radius:50%;border:8px solid ${PAPER};background:rgba(243,241,234,${.08+tp*.3})"></div>`;
+  s+=phone(inn,b,32,{kick:32});
+  s+=chips(b,[[34,'装了什么 App，它就会什么']]);
+  return s;
+}
+function sMont(b){
+  const w=['打电话','接电话','记纪要','回消息','查订单','发内容','设提醒','出简报'];
+  const k=cl(Math.floor((b-40)*2),0,7), loc=(b-40)*2-k, q=eo(cl(loc/.6));
+  const styles=[[INK,PAPER],[ACC,'#fff'],[PAPER,INK],[INK,ACC]];
+  const [bgc,fg]=styles[k%4];
+  return `<div class="abs" style="inset:0;background:${bgc}"></div>
+   <div class="abs" style="left:70px;top:140px;font-size:120px;font-weight:900;color:${fg};opacity:.35">0${k+1}</div>
+   <div class="c" style="top:760px;font-size:300px;font-weight:900;letter-spacing:-10px;color:${fg};transform:scale(${mix(1.9,1,q)}) rotate(${(k%2?1:-1)*(1-q)*6}deg);filter:blur(${(1-q)*18}px);line-height:1.1">${w[k]}</div>
+   <div class="abs" style="left:0;top:1860px;height:16px;width:${(k+loc)/8*1080}px;background:${fg}"></div>`;
+}
+function sEnd(b){
+  let s=bg(b);
+  const q=back(p(b,44,.7)), pu=pulse(b,4);
+  s+=`<div class="abs" style="left:390px;top:480px;width:300px;height:300px;border-radius:84px;background:${ACC};transform:scale(${cl(q,0,1.4)*(1+pu*.04)}) rotate(${mix(-90,0,eo(p(b,44,.7)))}deg)">
+     <div class="abs" style="left:92px;top:60px;width:116px;height:180px;border-radius:40px;border:20px solid #fff"></div></div>`;
+  s+=slam('Phonodo',b,45,{y:860,size:190,ls:'-6px'});
+  s+=slam('给你的 AI',b,46,{y:1130,size:130,ls:'-2px',from:1.8});
+  s+=slam('配一台手机',b,46.5,{y:1290,size:150,cls:'g',ls:'-3px',from:1.8});
+  const e=eo(p(b,47.5,.6));
+  s+=`<div class="c" style="top:1520px;font-size:52px;font-weight:700;letter-spacing:8px;opacity:${e*.9};transform:translateY(${mix(50,0,e)}px)">GIVE YOUR AI A PHONE</div>`;
+  const u=p(b,48.5,.8);
+  s+=`<div class="c" style="top:1700px;font-size:38px;font-weight:600;opacity:${u*.6};letter-spacing:2px">relay.openaigrowth.com</div>`;
+  const f=p(b,51,1);
+  s+=`<div class="abs" style="inset:0;background:#000;opacity:${f}"></div>`;
+  return s;
+}
+const SC=[[0,sHook],[4,sGive],[8,sCall],[16,sAnswer],[24,sNotes],[32,sApps],[40,sMont],[44,sEnd]];
+const CUTS=[4,8,16,24,32,40,44], SLAMS=[0,1,2,3,4,5,6,8,14,16,24,32,44,45];
+window.render=function(t){
+  const b=t/SPB; let f=SC[0][1];
+  for(const [s,fn] of SC) if(b>=s) f=fn;
+  const root=document.getElementById('root');
+  root.innerHTML=`<div class="abs" style="inset:0;transform:${shake(b,SLAMS)}">${f(b)}</div>${flash(b,CUTS)}`;
+};
+window.DUR=TOTAL*SPB; render(0);
+</script></body></html>
