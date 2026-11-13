@@ -94,4 +94,4 @@
 - [ ] 新增（11-12）：Etsy Plus 订阅包含什么、月费多少（帮助中心 What is Etsy Plus? 360001589928）——53 收据
 - [ ] 新增（11-12）：店铺分区 Shop sections 怎么建、最多几个（帮助中心 How to Create and Manage Shop Sections 360000345048）——55 手机
 - [ ] 新增（11-12）：店铺名能改几次——最多 5 次，之后要 Etsy Support 批准，改大小写或改回旧名不算（帮助中心 115015628487，KP.010 时已读到）——54 大字
-- [x] PROMO EP.003（11-13）图片去属性工具：产品图上传 Etsy 被提示 AI 生成 → 线索在文件属性（Etsy 未公开识别方式）→ 上传前清属性 openaigrowth.com/tools/clean-image；片中写明规矩照守（至少一张未修改实拍图、用了 AI 描述里写明；10-22 卖家手册 Important updates to AI use on Etsy），51b 模板 + Bo，成片 43feb543b417（ElevenLabs Eleven v4「will」配音，口语稿、整段生成，配音稿里 Etsy 写成 icey；Tony 从三条里选的。Bo 版嫌不自然、断句有问题，MiniMax 版嫌太像电脑）。没讲「查不出来」，以后也别这么讲
+- [x] PROMO EP.003（11-13）图片处理工具（网站 /tools/clean-image）：产品图上传 Etsy 被提示 AI 生成 → 我们有工具能处理 → 上传/处理/下载、原尺寸画面不变、一次最多 20 张、第一次免费。Tony 定：片里不讲我们怎么做的（不提属性、原理），也不讲「要守 Etsy 规矩」；也不说「查不出来」这类保证。51b 模板 + ElevenLabs v4 will（口语稿、整段生成，Etsy 在配音稿里写 icey），成片 50ea492d0ce7
