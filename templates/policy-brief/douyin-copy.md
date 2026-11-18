@@ -1020,7 +1020,7 @@ Etsy 帮助中心关于数字商品（How to Manage Your Digital Listings）：
 
 ## EP.034 · 在商品里给 AI 塞话，小心封店（新版使用条款 §6.F + §6.C，12-16 生效）
 
-- 成片：https://edit.openaigrowth.com/files/2ee10f309db88104bb76836b718fa0e15113ef8bbcd357719acf179cf79c3ee0/https://edit.openaigrowth.com/files/2ee10f309db88104bb76836b718fa0e15113ef8bbcd357719acf179cf79c3ee0/adcb23550e74.mp4（65.3 秒）
+- 成片：https://edit.openaigrowth.com/files/2ee10f309db88104bb76836b718fa0e15113ef8bbcd357719acf179cf79c3ee0/https://edit.openaigrowth.com/files/2ee10f309db88104bb76836b718fa0e15113ef8bbcd357719acf179cf79c3ee0/8523c49acc29.mp4（61.9 秒，ElevenLabs Will 男声）
 
 **封面**：在商品里给AI塞话，小心封店
 **标题**：Etsy新条款12月16日生效：商品里藏指令，账号可能直接终止
