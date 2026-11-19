@@ -67,6 +67,7 @@
 
 - [ ] 11-15 政策速递停一期：近 7 天社区公告只有 EU 海关（190722，11-14 重发，内容 = EP.014：€2 处理费、€3 关税、PID）、Share & Save、美国海关、Cyber Sale，都已做；etsy.com、help.etsy.com、卖家手册、社区公告第 2 页本次全部读不了（抓取权限没人确认），待做里剩下的题都核实不了
 - [ ] 11-16 政策速递再停一期（连续第 2 天）：社区公告第 1 页 12 帖都已做或无新规（EU 海关 190722 = EP.014、Share & Save、美国海关、Cyber Sale、EPR 请愿无新规、Etsy Up 回放）；社区 ?page=2/3 返回的仍是第 1 页；etsy.com（卖家手册 Site Updates、legal/privacy、legal/terms）和 help.etsy.com 抓取全部报权限未确认（PROVENANCE_REQUIRED），待做里剩下的题都核实不了。需要 Tony 放行 etsy.com 和 help.etsy.com 的网页读取
+- [ ] 11-19 政策速递停一期（11-15 起第 3 次）：社区公告第 1 页 12 帖都已做或无新规（EU 海关 190722 11-18 重发 = EP.014，含 M-PID/NS-PID/SKU 路径也已讲；美国海关 190423 11-18 重发 = EP.016；Share & Save = EP.033；Cyber Sale；EPR 请愿；Etsy Up 回放；Newly Crafted 188813 三项 = EP.026/030/003/007，184688 三项 = EP.027/011 等）；社区公告第 2 页、etsy.com（卖家手册 Site Updates、uk/legal/privacy）、help.etsy.com 43476182453399 抓取全部报权限未确认（PROVENANCE_REQUIRED），待做里剩下的数字商品打印测试、隐私政策 AI 退出两题仍核实不了
 
 ## 知识讲解 · 已做 / 已占
 - [x] KP.000（11-06）样片：卖 20 美元 Etsy 拿走多少（上架费 $0.20、交易费 6.5% 含运费、美国支付手续费 3%+$0.25，合计约 11%），53 号收据拆账模板，可作为第一期发
