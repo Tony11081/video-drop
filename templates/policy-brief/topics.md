@@ -69,7 +69,7 @@
 - [ ] 11-16 政策速递再停一期（连续第 2 天）：社区公告第 1 页 12 帖都已做或无新规（EU 海关 190722 = EP.014、Share & Save、美国海关、Cyber Sale、EPR 请愿无新规、Etsy Up 回放）；社区 ?page=2/3 返回的仍是第 1 页；etsy.com（卖家手册 Site Updates、legal/privacy、legal/terms）和 help.etsy.com 抓取全部报权限未确认（PROVENANCE_REQUIRED），待做里剩下的题都核实不了。需要 Tony 放行 etsy.com 和 help.etsy.com 的网页读取
 - [ ] 11-19 政策速递停一期（11-15 起第 3 次）：社区公告第 1 页 12 帖都已做或无新规（EU 海关 190722 11-18 重发 = EP.014，含 M-PID/NS-PID/SKU 路径也已讲；美国海关 190423 11-18 重发 = EP.016；Share & Save = EP.033；Cyber Sale；EPR 请愿；Etsy Up 回放；Newly Crafted 188813 三项 = EP.026/030/003/007，184688 三项 = EP.027/011 等）；社区公告第 2 页、etsy.com（卖家手册 Site Updates、uk/legal/privacy）、help.etsy.com 43476182453399 抓取全部报权限未确认（PROVENANCE_REQUIRED），待做里剩下的数字商品打印测试、隐私政策 AI 退出两题仍核实不了
 
-- [ ] 进行中 · 11-20 · 政策速递 EP.035：Etsy 回应新条款 AI 争议（社区公告 Our recent Terms of Use update 192097，VP of Customer Operations jamesossman；EP.032 的「更新」）
+- [x] EP.035（11-20）Etsy 回应新条款 AI 争议（EP.032 的「更新」）：客户运营副总裁社区公告——创意内容一直属于你、不据为己有也不给别人这个权利、条款照样允许 Etsy 和合作伙伴用会员内容开发训练测试改进 AI、承诺不训练抄你作品/取代创意的模型、现用途（识别欺诈、搜索推荐、卖家工具、翻译描述、营销用图）、能接触内容的第三方（反欺诈服务、站外广告伙伴）、集成用不用是你的选择、公告没提改条款也没讲退出（社区公告 Our recent Terms of Use update 192097，帖子页面没显示发帖日期；条款 §5 和 12-16 生效取自 EP.032；OUR TAKE：这是安抚不是让步，承诺写在帖里、授权写在条款里），成片 9d0f20edf0a5，素材 42121 / 4175。近 7 天其他公告（EU/美国海关、Cyber Sale、11-06 AI 图片更新 = EP.001）都已做过；etsy.com、help.etsy.com 本次未尝试
 
 ## 知识讲解 · 已做 / 已占
 - [x] KP.000（11-06）样片：卖 20 美元 Etsy 拿走多少（上架费 $0.20、交易费 6.5% 含运费、美国支付手续费 3%+$0.25，合计约 11%），53 号收据拆账模板，可作为第一期发
