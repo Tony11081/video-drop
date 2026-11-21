@@ -1,0 +1,80 @@
+/* EP.036 · Etsy test: buyers can turn eligible digital purchases into printed items (Ventur Editions)
+   Source: help.etsy.com/hc/en-us/articles/43476182453399-How-Printed-Items-From-Digital-Purchases-Work-for-Sellers
+   (no "last updated" shown): "Etsy is testing a new way for buyers to turn eligible digital files they purchase on Etsy's website
+   into printed items"; eligible listings "may be included in this test automatically"; eligibility: shop based in the US or Canada,
+   seller doesn't already offer a physical version of the design, doesn't use its own print-on-demand integration, file meets the
+   print partner's requirements; printed by third-party Ventur Editions, which "sells and fulfills the printed item from their shop",
+   separate checkout on Etsy, the printed item has its own listing and reviews, Ventur Editions provides support;
+   opt-out "applies to your shop rather than individual listings": Shop Manager › Settings › Options ›
+   "Allow buyers to purchase digital prints" › Disabled; opting out doesn't prevent buyers from independently using Ventur Editions'
+   services with downloaded content. Article says nothing about seller payment / revenue share or test duration.
+   tts ea19ba6705e8 (Bo, round 1 of 3 used — rounds 2/3 had more mid-sentence pauses and round 3's hook ran 4.1 s;
+   round 1 keeps one 0.8 s pause after 「我们的看法：」)
+   · OUR TAKE: Etsy is validating that your design has physical demand — take that sale yourself (offering a physical version
+     takes the listing out of the test by the article's own eligibility rule) */
+window.EP = {
+  speed: 1.3, lead: 0.30, tail: 3.0,
+  episode: "EP.036",
+  source: "SOURCE · ETSY HELP CENTER",
+  tts: { id: "ea19ba6705e8", voice: "zh-CN-Bo:MAI-Voice-2.1", gap: 0.3 },
+  follow: "关注 · 每天一条 Etsy 政策速递",
+  unit: "RULE", rail: ["01", "02", "03", "04"],
+  voice: [
+    { dur: 4.579, cap: "你卖的数字图|Etsy正让别人印成实物卖", keys: ["印成实物卖"],
+      scene: { type: "hook", video: "5c01adcff403", from: 1, kicker: "DIGITAL → PRINT · 打印测试", scanTag: "TEST",
+               lines: ["你的数字图"], marked: "被印成实物卖" } },
+    { dur: 4.938, cap: "Etsy在做测试，买家买完数字文件|可以再下单印成实物", keys: ["印成实物"],
+      scene: { type: "rows", kicker: "TEST · 测试中", title: ["数字图", "变实物"],
+               rows: [["plain", "买家", "买完数字文件"], ["warn", "再下单", "印成实物"], ["plain", "状态", "测试中 · TEST"]],
+               on: [0.1, 0.5, 0.8] } },
+    { dur: 5.825, cap: "印的是第三方印刷商Ventur Editions|从它自己的店卖、自己发货", keys: ["第三方印刷商"],
+      scene: { type: "rows", kicker: "PRINT PARTNER · 印刷商", title: ["谁印", "谁卖"],
+               rows: [["warn", "印刷商", "Ventur Editions"], ["plain", "在哪卖", "它自己的店"], ["plain", "谁发货", "它自己发"]],
+               on: [0.1, 0.55, 0.8] } },
+    { dur: 5.308, cap: "第一，店铺在美国或加拿大|商品合格，就会被自动加入", keys: ["自动加入"],
+      scene: { type: "rows", rule: 1, title: ["默认", "自动加入"],
+               rows: [["plain", "店铺所在地", "美国 / 加拿大"], ["plain", "商品", "符合条件"], ["warn", "加入方式", "自动 · 默认开"]],
+               on: [0.1, 0.45, 0.7] } },
+    { dur: 4.925, cap: "第二，合格的前提是你自己没卖这款的实物版|也没接按需印刷", keys: ["实物版"],
+      scene: { type: "rows", rule: 2, title: ["合格", "前提"],
+               rows: [["warn", "实物版", "你自己没在卖"], ["warn", "按需印刷", "你没接"], ["plain", "文件", "达到印刷要求"]],
+               on: [0.1, 0.6, 0.8] } },
+    { dur: 6.19, cap: "第三，实物单独结账|有自己的商品页和评价，售后归印刷商", keys: ["售后归印刷商"],
+      scene: { type: "rows", rule: 3, title: ["实物单", "归谁"],
+               rows: [["plain", "结账", "单独结账"], ["plain", "商品页和评价", "印刷商自己的"], ["warn", "售后", "印刷商负责"]],
+               on: [0.1, 0.4, 0.75] } },
+    { dur: 4.155, cap: "第四，退出只能整店退|不能按单个商品退", keys: ["整店退"],
+      scene: { type: "rows", rule: 4, title: ["退出", "只能整店"],
+               rows: [["bad", "单个商品", "不能单独退"], ["ok", "整个店铺", "一个开关"]],
+               on: [0.1, 0.5] } },
+    { dur: 5.857, cap: "路径是店铺后台，设置，选项|把允许买家购买打印版改成关闭", keys: ["改成关闭"],
+      scene: { type: "path", rule: 4, file: "Shop Manager", title: ["退出", "入口"], crumbs: ["Shop Manager", "Settings", "Options"],
+               foot: [["warn", "购买打印版", "改成 Disabled"]], footAt: [0.62] } },
+    { dur: 4.084, cap: "帮助文章一个字没写|卖家能不能分到钱", keys: ["分到钱"],
+      scene: { type: "rows", title: ["文章", "没写的"],
+               rows: [["bad", "卖家分成", "没写"], ["bad", "测试多久", "没写"]],
+               on: [0.1, 0.55] } },
+    { dur: 4.746, cap: "就算关掉，买家也能拿着下载的文件|自己去找这家印刷商", keys: ["自己去找"],
+      scene: { type: "rows", title: ["关掉了", "也拦不住"],
+               rows: [["ok", "关掉之后", "不再弹打印选项"], ["bad", "买家下载的文件", "可自己找它印"]],
+               on: [0.1, 0.55] } },
+    { dur: 6.247, cap: "我们的看法：Etsy在替你验证|这款数字图有人想要实物", keys: ["有人想要实物"],
+      scene: { type: "split", h: 440, kicker: "OUR TAKE · Shopwright 观点", title: ["需求", "替你验证了"],
+               left: { name: "让给别人 · THEM", big: "印刷商", sub: "实物单 · 评价 · 售后",
+                       items: [["bad", "分不分钱没写"], ["bad", "客人归别人"]] },
+               right: { name: "自己接 · YOU", big: "实物版", sub: "我们的建议",
+                        items: [["ok", "利润自己拿"], ["ok", "客人归自己"]] },
+               on: [0.3, 1.1] } },
+    { dur: 4.767, cap: "这单实物生意|与其让给别人，不如自己接", keys: ["不如自己接"] },
+    { dur: 4.549, cap: "按文章的条件|你自己卖实物版的款，就不在测试里", keys: ["不在测试里"],
+      scene: { type: "rows", kicker: "OUR TAKE · 按文章条件推出", title: ["自己上", "实物版"],
+               rows: [["ok", "自己卖实物版", "不算合格商品"], ["ok", "这一单", "自己接"]],
+               on: [0.1, 0.6] } },
+    { dur: 7.972, cap: "今天先做三件事：查店铺在不在美加|挑出卖得好的数字图，给它们上实物版", keys: ["三件事"],
+      scene: { type: "checklist", kicker: "TODO · 今天", title: ["今天", "先做三件事"],
+               items: ["查店铺在不在美加", "挑出卖得好的数字图", "给它们上实物版"], at: [0.2, 0.45, 0.68] } },
+    { dur: 7.298, cap: "数字图卖得好，实物就自己做|关注我，每天一条Etsy政策速递", keys: ["实物就自己做"],
+      scene: { type: "cta", video: "25dbd2db61ae", from: 2, kicker: "OUR TAKE · Shopwright 观点", title: ["实物", "自己做"],
+               word: "Shopwright", url: "openaigrowth.com", note: "观点仅供参考" } },
+  ],
+};
