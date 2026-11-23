@@ -94,7 +94,7 @@
 - [x] KP.016（11-20）Etsy Plus 订阅包含什么：月费 $10 从付款账户余额扣、每月 15 个额度（新建或续上架）、每月 $5 Etsy 广告额度、额度不结转不用就过期每个周期重置、补货提醒（断货后买家可登记到货通知）、店铺首页多种横幅/布局/配色/可放指定商品或分区、入口 Shop Manager › Settings › Your subscription、取消后用到本期结束回到 Standard；原文引句「Credits don't roll over month-to-month.」（帮助中心 What is Etsy Plus? 360001589928；上架费 $0.20 见 etsy.com/legal/fees；OUR TAKE：额度按上架费算只值 $8（15×$0.20+$5），多花的 $2 买装修和补货提醒，用不上就别开），54 镂空大字模板，成片 6b219b7cda0c，素材 242 / 771。原文同页的 Marketplace Insights 无限关键词与 EP.030 重叠，没讲；原文没写自定义域名、包装折扣、开通国家限制，没讲。当天政策速递 EP.035 是账号/使用条款类（AI 条款回应），不撞类
 - [x] KP.017（11-21）店铺分区 Shop sections：最多 20 个自建分区 + 默认「全部商品」、分区名 ≤24 字符、一个商品只能加进一个分区、入口 Shop Manager › Listings › Sections › Organize your listings、没放商品的分区店铺页不显示、删分区商品不下架回到 All items、分区显示为店铺页左侧链接；原文引句「You can only add a listing to one section.」（帮助中心 How to Create and Manage Shop Sections 360000345048，页面没写更新日期；OUR TAKE：一个商品只能放一格，别按材质分，按买家怎么找来分（送给谁、场合），分区是导航不是货架），55 手机模板，成片 339e6bae6878，素材 42137 / 772 / 4517。原文没写分区排序、精选分区、是否影响搜索，没讲；App 端步骤原文没写，没讲。当天政策速递 EP.036 是商品合规/数字商品类，不撞类
 - [x] KP.018（11-22）店铺名能改几次：开店前随便改、开店后自己最多改 5 次、之后要 Etsy Support 批准、只改大小写或改回用过的旧名不算次数、店名最多 20 个字符不能有空格和标点（可用大写分开单词）、改名后旧链接自动跳到新店名、店铺页/店铺资料/店铺搜索结果挂 45 天改名标记；原文引句「you can change your shop name up to 5 times」（帮助中心 How to Change Your Shop Name 115015710568，页面没写更新日期；OUR TAKE：店名就是店铺网址，开店前就定好，开店后别反复改），54 镂空大字模板，成片 c634f7183dc1，素材 242 / 31218 / 4175。用过的店名关店后也不能再用、侵权投诉腾不出店名、改名后要同步改 logo/横幅/公告/About，没讲；原文没写改名对评价/销量/搜索的影响，没讲。当天政策速递 EP.037 是费用/物流类（英国价格透明），不撞类
-- [ ] 进行中 · 11-23 · 知识讲解 KP.019 运费模板 Shipping profiles 怎么设（帮助中心 115014115187；避开 EP.020 处理时间和发货日、KP.008 运单）。当天政策速递 EP.038 是 AI 工具类，不撞物流类
+- [x] KP.019（11-23）运费模板 Shipping profiles：把运费设置存下来套在多个商品上、一个商品只能连一个模板（原文引句「A listing can only be connected to one shipping profile.」）、每个商品只能有一个发货地、改模板所有用它的商品一起更新、运费分一件价/每多一件价（同单买店里别的商品也按多件价）、没单独设价的国家地区按 Everywhere Else 收、批量换模板（勾选 › Editing options › Change shipping profiles）、入口 Shop Manager › Settings › Shipping settings › Shipping profiles（帮助中心 How to Set Up Shipping Information 115014115187，页面没写更新日期；不带标题的地址读不了，带标题地址读到；OUR TAKE：运费模板是批量开关，别全店挂一个，按尺寸重量分几套，改运费前先看挂了哪些商品），55 手机模板，成片 2cf0b0ee430e，素材 42137 / 31267 / 4517。原文没写每店最多几个模板、一个模板最多套几个商品、删模板后商品会怎样，没讲；处理时间与 EP.020 重叠、运费升级 upgrades 和计算运费没讲。当天政策速递 EP.038 是 AI 工具类，不撞类
 - 样片不发（和政策速递撞题）：激光木牌算不算卖家自制（=EP.023）、星级卖家门槛（=EP.018）、站外广告开关（=EP.009）
 
 ## 知识讲解 · 待做（开工时逐条核实官方原文，核实不了就换题；用完补到剩 5 条以上）
@@ -113,7 +113,7 @@
 - [x] 已做 KP.016 —— 新增（11-12）：Etsy Plus 订阅包含什么、月费多少（帮助中心 What is Etsy Plus? 360001589928）——改用 54 大字（前一天 KP.015 用了 53）
 - [x] 已做 KP.017 —— 新增（11-12）：店铺分区 Shop sections 怎么建、最多几个（帮助中心 How to Create and Manage Shop Sections 360000345048）——55 手机
 - [x] 已做 KP.018 —— 新增（11-12）：店铺名能改几次（实际出处帮助中心 How to Change Your Shop Name 115015710568）——54 大字
-- [ ] 新增（11-19）：运费模板 Shipping profiles 怎么设、一个模板能套多少商品（帮助中心 How to Set Up Shipping Information 115014115187；避开 EP.020 处理时间和发货日）——55 手机
+- [x] 已做 KP.019 —— 新增（11-19）：运费模板 Shipping profiles 怎么设、一个模板能套多少商品（帮助中心 How to Set Up Shipping Information 115014115187；避开 EP.020 处理时间和发货日）——55 手机
 - [ ] 新增（11-19）：装箱单和订单收据能打印什么、要不要放进包裹（帮助中心 Packing Slips and Order Receipts for Sellers 115015692187）——52 原文
 - [ ] 新增（11-19）：优惠券码 Coupon code 怎么设、有什么限制（帮助中心 Sales and discounts 相关文章，开工时先搜到原文；避开 EP.027 定向优惠和 Cyber 大促）——53 收据
 - [ ] 新增（11-19）：礼品选项（礼品包装、礼品留言、礼品收据）怎么开、能不能收费（帮助中心 gift options 相关文章，开工时先搜到原文）——55 手机
