@@ -181,7 +181,7 @@
         s.items.forEach((it, i) => {
           const p = eo(P(u, ts[i] + 0.1, 1.1)), el = $(r, ".st-" + i);
           $(el, ".bar i").style.width = 100 * w(it[1]) * p + "%";
-          $(el, ".sv").textContent = it[2] && p >= 0.999 ? it[2] : (s.pre ?? "+") + fmtNum(it[1] * p) + (s.post ?? "%");
+          $(el, ".sv").textContent = it[2] && p >= 0.999 ? it[2] : (s.pre ?? "+") + fmtNum(it[1] * p, s.dec || 0) + (s.post ?? "%");
         });
       },
       cues: ts.map((t) => [t + 0.1, "tick"]).concat(ts.map((t) => [t + 1.05, "soft"])).concat(tipT.map((t, i) => [t, s.tips[i][0] === "bad" ? "bad" : "ok"])),
