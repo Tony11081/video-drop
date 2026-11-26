@@ -1408,7 +1408,7 @@ Etsy 帮助中心（How to Set Up Sales and Discounts for Your Shop）：
 - 成片：https://edit.openaigrowth.com/files/2ee10f309db88104bb76836b718fa0e15113ef8bbcd357719acf179cf79c3ee0/65ae89585d27.mp4（32.1 秒）
 
 **封面**：礼品包装 价格不能设0！
-**标题**：Etsy礼品包装不能免费送，按单收费这点很多人算错
+**标题**：Etsy礼品包装不能免费送，按单收费这笔账要算清
 
 **正文**
 我们的看法：礼品包装是按订单收费的，一单买 5 件也只收 1 次，所以包装费要按一单的成本来定，别按一件的成本定，多件单别亏在包装上。礼品包装是加价项，不是赠品。
