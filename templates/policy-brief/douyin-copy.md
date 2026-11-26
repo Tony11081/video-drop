@@ -1402,3 +1402,28 @@ Etsy 帮助中心（How to Set Up Sales and Discounts for Your Shop）：
 **话题**：#Etsy #Etsy卖家 #跨境电商 #Etsy知识点 #Etsy运营
 
 **评论区引导**：你给 Etsy 店发过优惠码吗？一般打几折、限多少次？评论区说说。
+
+## 知识讲解 KP.022 · Etsy 礼品包装：价格不能设成 0
+
+- 成片：https://edit.openaigrowth.com/files/2ee10f309db88104bb76836b718fa0e15113ef8bbcd357719acf179cf79c3ee0/65ae89585d27.mp4（32.1 秒）
+
+**封面**：礼品包装 价格不能设0！
+**标题**：Etsy礼品包装不能免费送，按单收费这点很多人算错
+
+**正文**
+我们的看法：礼品包装是按订单收费的，一单买 5 件也只收 1 次，所以包装费要按一单的成本来定，别按一件的成本定，多件单别亏在包装上。礼品包装是加价项，不是赠品。
+
+Etsy 帮助中心（How to Offer Gift Services）：
+🎁 入口：店铺管理 › 设置（Settings）› 选项（Options）› Offer gift wrapping › Enable and set price
+🚫 礼品包装的价格不能设成 0
+📦 原文：这笔费用按每个订单收，不按订单里的单件商品收
+📷 可以传一张包装照片，写几句包装说明给买家看
+💌 礼物留言是另一个开关（Offer gift messages）
+🔒 买家结账时把订单标成礼物，这个卖家关不掉
+🙋 收礼人可以直接私信卖家；退货只能由买家发起，换货可以直接和收礼人沟通
+
+（规则以 Etsy 帮助中心为准；观点仅供参考）
+
+**话题**：#Etsy #Etsy卖家 #跨境电商 #Etsy知识点 #Etsy运营
+
+**评论区引导**：你的 Etsy 店开了礼品包装吗？一单收多少钱？评论区说说。
