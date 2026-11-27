@@ -1453,4 +1453,4 @@ Etsy 帮助中心（How to Reinstate Your Suspended Account / How to File an App
 
 **话题**：#Etsy #Etsy卖家 #跨境电商 #Etsy封店 #店铺安全 #Etsy运营
 
-**评论区引导**：你同意「多数暂停只是手续问题」吗？你的店被暂停过吗，是因为什么？评论区说说。
+**评论区引导**：你同意「很多暂停只是手续问题」吗？你的店被暂停过吗，是因为什么？评论区说说。
